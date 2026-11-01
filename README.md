@@ -19,26 +19,51 @@ bağımlılık yoktur: termal optikler çalışma anında config'ten taranır, s
 | Her türlü ışık kaynağı (lamba, far, fişek) | **Yapılmadı (v0.2)** | Parçacık yönteminin TI'de çalıştığı doğrulanınca aynı altyapıya eklenecek |
 | RHS / CUP scope'ları | **Hazır** | Çalışma anında taranır, sonuç RPT'de (`[RTI][SCOPE]`) |
 
-## Kurulum
+## Mikero ile derleme
 
 Başlatma parametresi: `-mod=@CBA_A3;@RTI`
 
-**HEMTT** (önerilen, bu depoda yapılandırılı):
+1. Mikero araçlarını (**pboProject**, MakePbo, DePbo) ve P: sürücüsünü kur.
+2. Depoyu `P:\z\rti` yoluna getir. Ya doğrudan oraya klonla ya da yönetici komut isteminde:
+   ```bat
+   mklink /J "P:\z\rti" "C:\yol\a3-termal"
+   ```
+   (`P:\z` klasörü önceden var olmalı.) Sonuçta `P:\z\rti\addons\main\config.cpp` bulunmalı.
+3. pboProject'te kaynak klasör: `P:\z\rti\addons\main`, çıktı klasörü: `...\@RTI\addons`.
+   Prefix, klasördeki `$PBOPREFIX$` dosyasından okunur (`z\rti\addons\main`).
+4. `mod.cpp` dosyasını `...\@RTI\` köküne kopyala.
+5. pboProject `requiredAddons` (`cba_main`) bulunamadı diye uyarı verirse CBA PBO'larını DePbo ile P: sürücüsüne aç
+   ya da bu denetimi pboProject ayarlarından gevşet (TAC ile aynı durum).
+6. Config'teki `\A3\data_f\...` parçacık yolları için "dosya bulunamadı" uyarısı gelirse A3 verisini P: sürücüsüne aç
+   ya da uyarıyı yok say (yollar oyunun kendi dosyalarıdır, çalışma zamanında bulunur).
+7. Çıkan PBO adı klasör adına göre `main.pbo` olabilir. TAC ile aynı düzen için `rti_main.pbo` olarak yeniden adlandır
+   (zorunlu değil; CfgPatches adı `rti_main`, `tac_main` ile çakışmaz).
+8. Dedicated sunucuda imza doğrulaması açıksa: `DSCreateKey` ile anahtar üret, PBO'yu `.biprivatekey` ile imzala,
+   `.bikey`'i sunucunun `keys/` klasörüne koy. **`.biprivatekey` dosyasını asla depoya koyma** (`.gitignore` engeller).
+
+Sonuç: `@RTI\addons\rti_main.pbo` (+ varsa `.bisign`) ve `@RTI\mod.cpp`.
+
+**Mikero'ya göre sağlamlaştırılanlar:** `config.cpp` ve bütün `.hpp` dosyaları ASCII; `$PBOPREFIX$` sonunda satır sonu yok
+(TAC ile aynı); config'te `#define` makrosu yok (sıcak nokta sınıfları düz yazılı; üretici: `tools/gen_glow_cloudlets.py`);
+her `CfgFunctions` sınıfının `fn_*.sqf` karşılığı var. `docs/`, `tools/`, `.hemtt/` kaynak klasörünün (`addons\main`) dışındadır,
+PBO'ya girmez.
+
+**HEMTT (isteğe bağlı, yalnızca denetim):** Mikero'yu değiştirmez. Komut sürümü ve SQF sözdizimi denetimi için:
 
 ```bash
-hemtt build        # .hemttout/build/ içine @RTI yapısı çıkar
-hemtt check        # yalnızca denetim
+hemtt check        # config rapify + SQF analizi
+hemtt build        # .hemttout/build/ içine deneme PBO'su
 ```
-
-**Mikero:** depo kökünü `P:\z\rti` olarak konumlandır (`$PBOPREFIX$` = `z\rti\addons\main`), `addons\main`'i paketle,
-`mod.cpp`'yi `@RTI` köküne kopyala.
 
 ## Yapı
 
 ```
 mod.cpp
-.hemtt/project.toml                      HEMTT (prefix z\rti)
+.hemtt/project.toml                      yalnızca HEMTT denetimi için (Mikero'yu etkilemez)
+tools/gen_glow_cloudlets.py              spot/CfgCloudlets.hpp üreticisi (12 düz sınıf, makro yok)
+docs/                                    FIZIBILITE, TEST_ASAMA1, AB_TEST
 addons/main/                             -> rti_main.pbo
+    $PBOPREFIX$                          Mikero bu dosyadan prefix'i okur (z\rti\addons\main)
     config.cpp                           CfgPatches, CfgFunctions, CfgCloudlets, CBA XEH
     XEH_preInit.sqf / XEH_postInit.sqf
     core/       yetenek tespiti (komut var mı?), termal optik taraması, teşhis araçları

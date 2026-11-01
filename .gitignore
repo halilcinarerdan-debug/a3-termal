@@ -11,3 +11,9 @@ Thumbs.db
 # HEMTT
 .hemttout/
 .hemttprivatekey
+
+# A/B referans gorselleri: ucuncu taraf (web / oyun ekran goruntusu), depoya konmaz
+docs/referans/*.png
+docs/referans/*.jpg
+docs/ab/*.png
+docs/ab/*.jpg
