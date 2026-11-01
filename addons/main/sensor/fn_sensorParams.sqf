@@ -65,6 +65,15 @@ if (missionNamespace getVariable ["RTI_env_enabled", false]) then {
     _noise = _noise * _noiseK;
 };
 
+// Canlı ayar (RTI_fnc_liveAdjust, tuşlarla): açıkken parlaklık / kontrast / siyah seviyesi canlı değerlerden gelir (ortam çarpanı yok sayılır).
+if (missionNamespace getVariable ["RTI_live_enabled", false]) then {
+    private _live = missionNamespace getVariable ["RTI_live_vals", [1, 1, 0]];
+
+    _brightness = _live select 0;
+    _contrast = _live select 1;
+    _offset = _live select 2;
+};
+
 // Zemin tabanı: kontrast siyaha gömdükten SONRA, ayrı bir katmanla siyahı biraz kaldırır; çimen ve toprak eşit koyu griye
 // oturur (çimen kaybolur, toprak simsiyah olmaz). Bakılan yüzeye (RTI_fnc_surfaceUpdate) ve bakış yönüne
 // (gökyüzü siyah kalsın) göre ölçeklenir.

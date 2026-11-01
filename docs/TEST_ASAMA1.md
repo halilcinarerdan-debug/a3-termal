@@ -51,6 +51,23 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a000000. CANLI AYAR (0.4.9): görünümü tuşlarla bul, değerleri bana yapıştır
+
+Menüden sürgü değiştirmek yavaş. Termale (veya Shift+Ctrl+T ile zorlanmış) bakarken, **hepsi Ctrl + Alt ile**:
+
+| Tuş | Ne yapar |
+|-----|----------|
+| Yukarı / Aşağı | parlaklık +10% / -10% |
+| Sağ / Sol | kontrast +10% / -10% |
+| PageUp / PageDown | siyah seviyesi +0.03 / -0.03 |
+| **End** | değerleri sohbete yazar **ve panoya kopyalar** |
+| Home | canlı modu kapatır (hazır ayara döner) |
+
+Kullanım: Hazır ayar = Gözetleme. Termale bak, istediğin görünüme gelene kadar tuşlarla oyna (her basışta ekran anında değişir). Beğendiğin noktada **End**,
+sonra Ctrl+V ile bana yapıştır: `parlaklik=... kontrast=... siyahSeviyesi=...`. Bu üç sayıyı hazır ayara sabit yazarım. Farklı kadrajlar için
+(uzak ağaçlar, yakın zemin, araç) ayrı ayrı bakıp her biri için sayıları gönderebilirsin. Tuşlar CBA > Tuş Atamaları'ndan değiştirilebilir;
+Zeus'ta çalışmazsa konsol: `["b", 1] call RTI_fnc_liveAdjust;` (b / c / o, yön 1 ya da -1), `["report", 0] call RTI_fnc_liveAdjust;`.
+
 ## 2a00000. "AC-130 / gözetleme kamerası" görünümü (0.4.8)
 
 Hedef (iki referans: gözetleme uçağı kamerası): zemin, ağaç, duvar **dar bir orta-gri bantta, düşük kontrastla ve ince dokuyla**; yalnızca ısı kaynakları

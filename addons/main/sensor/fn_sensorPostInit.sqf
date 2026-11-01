@@ -40,3 +40,26 @@
     {},
     [20, [true, true, false]]
 ] call CBA_fnc_addKeybind;
+
+// Canlı ayar tuşları (Ctrl + Alt + ...): termale bakarken parlaklık / kontrast / siyah seviyesini değiştir, End ile değerleri panoya al.
+{
+    _x params ["_id", "_name", "_dik", "_which", "_dir"];
+
+    [
+        "RTI - Gerçekçi Termal",
+        _id,
+        [_name, "Canlı ayar: termale bakarken değiştir, End ile değerleri panoya kopyala ve bana yapıştır."],
+        compile format ["[""%1"", %2] call RTI_fnc_liveAdjust; true", _which, _dir],
+        {},
+        [_dik, [false, true, true]]
+    ] call CBA_fnc_addKeybind;
+} forEach [
+    ["RTI_liveBrightUp",   "Canlı: parlaklık +10%",          200, "b", 1],
+    ["RTI_liveBrightDown", "Canlı: parlaklık -10%",          208, "b", -1],
+    ["RTI_liveContrUp",    "Canlı: kontrast +10%",           205, "c", 1],
+    ["RTI_liveContrDown",  "Canlı: kontrast -10%",           203, "c", -1],
+    ["RTI_liveBlackUp",    "Canlı: siyah seviyesi +0.03",    201, "o", 1],
+    ["RTI_liveBlackDown",  "Canlı: siyah seviyesi -0.03",    209, "o", -1],
+    ["RTI_liveReport",     "Canlı: değerleri yaz / panoya kopyala", 207, "report", 0],
+    ["RTI_liveOff",        "Canlı: kapat (hazır ayara dön)", 199, "off", 0]
+];

@@ -14,4 +14,5 @@ class sensor
     class sensorPolarity {};
     class sensorParams {};
     class sensorForce {};
+    class liveAdjust {};
 };
