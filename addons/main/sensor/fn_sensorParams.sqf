@@ -22,14 +22,17 @@
 */
 
 // Tüm okumalar varsayılanlı: tanımsız bir ayar değişkeni (ör. eski/yarım yüklenmiş ayarlar) hata verip efekti öldürmesin.
-private _preset = missionNamespace getVariable ["RTI_sensor_preset", 2];
+private _preset = missionNamespace getVariable ["RTI_sensor_preset", 5];
 
 private _base = switch (_preset) do {
+    // Gozlem: kontrast > 1 bu ortamda goruntunun cogunu karartiyor (kontrast 0.85 iken goruntu aydinlikti); 1, 2, 4 kalibrasyon bekliyor.
     // 1 ve 4: oyunda ekranı TAMAMEN KARARTTI (ColorCorrections matematiği 0.5 pivot varsayımına uymuyor); kalibrasyon (RTI_fnc_ppLadder) bekliyor.
     case 1: {[1.0, 2.2, -0.30, 0.10, 0.6, 0.10]};
     case 2: {[1.0, 1.35, -0.08, 0.10, 0.4, 0.04]};
     case 3: {[0.95, 0.9, 0, 0.08, 0.25, 0]};
     case 4: {[1.0, 2.6, -0.45, 0.05, 0.45, 0.07]};
+    // 5 Notr: parlaklik/kontrast/ofset OLDUGU GIBI (vanilla ile ayni ton), yalnizca hafif bulaniklik ve gurultu. Karartmaz.
+    case 5: {[1.0, 1.0, 0, 0.06, 0.3, 0]};
     default {[
         missionNamespace getVariable ["RTI_sensor_brightness", 1.0],
         missionNamespace getVariable ["RTI_sensor_contrast", 1.7],

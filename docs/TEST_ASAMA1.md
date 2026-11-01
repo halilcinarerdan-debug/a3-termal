@@ -55,7 +55,7 @@ PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sı
 
 Gözlem: Agresif (kontrast 2.2, ofset -0.30) Zeus'ta ekranı **tamamen karartıyor**. Bu iki şeyi söyler: (1) post-process termal görüntünün
 üstüne **çiziliyor** (varsayım A4 doğrulandı), (2) ColorCorrections kontrast / ofset matematiği benim varsaydığım gibi **değil**.
-Bu yüzden hesap yerine ölçüyoruz. **Önce** Hazır ayar = **Dengeli** (varsayılan) ya da Yumuşak yap; ekran kararıyorsa Shift+Ctrl+T ile efekti kapat.
+Bu yüzden hesap yerine ölçüyoruz. **Önce** Hazır ayar = **Nötr** (0.4.3'te varsayılan: ton vanilla ile aynı, karartmaz) ya da Yumuşak yap; kontrast > 1 olan ayarlar (Dengeli, Agresif, Siyah) bu ortamda ekranı karartıyor; ekran kararıyorsa Shift+Ctrl+T ile efekti kapat.
 
 Termal görüntüye (Zeus + Shift+Ctrl+T açık değilken, vanilla termal) çimen ve bir tank/asker görünecek şekilde bak, debug konsolunda sırayla:
 

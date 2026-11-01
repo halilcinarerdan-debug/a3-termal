@@ -38,7 +38,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "LIST",
     ["Hazır ayar", "Agresif: sert siyah-beyaz, zemin siyaha yakın, çimen koyu gri, belirgin bulanıklık. Siyah: çimeni ve zayıf ısıları siyaha gömer (sert eşik); insan giysisi de koyulaşır, yalnızca yüz/el gibi sıcak yerler parlak kalır. Dengeli: ılımlı. Yumuşak: vanilla'ya yakın. Elle: aşağıdaki sürgüler kullanılır."],
     _category,
-    [[0, 1, 2, 3, 4], ["Elle (aşağıdaki sürgüler)", "Agresif (KALİBRASYON BEKLİYOR: ekranı karartabilir)", "Dengeli", "Yumuşak", "Siyah (KALİBRASYON BEKLİYOR: ekranı karartabilir)"], 2],
+    [[0, 1, 2, 3, 4, 5], ["Elle (aşağıdaki sürgüler)", "Agresif (KALİBRASYON BEKLİYOR: ekranı karartır)", "Dengeli (kontrast 1.35: ekranı karartabilir)", "Yumuşak", "Siyah (KALİBRASYON BEKLİYOR: ekranı karartır)", "Nötr (vanilla ton, hafif bulanıklık + gürültü)"], 5],
     false,
     _refresh
 ] call CBA_settings_fnc_init;
