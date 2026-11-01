@@ -101,6 +101,14 @@ format [
     missionNamespace getVariable ["RTI_sensor_floor", "?"]
 ] call _log;
 
+// A3TI uyumluluğu
+format [
+    "A3TI tespiti=%1 | eslesen CfgPatches=%2 | 'A3TI yukluyken sensor efektleri'=%3",
+    missionNamespace getVariable ["RTI_cap_a3ti", "?"],
+    missionNamespace getVariable ["RTI_a3tiPatches", "?"],
+    missionNamespace getVariable ["RTI_sensor_withA3TI", "?"]
+] call _log;
+
 // Optik taraması
 private _scan = missionNamespace getVariable ["RTI_thermalOptics", []];
 format ["taranan termal optik sayisi: %1 (ayrinti: RPT '[RTI][SCOPE]')", count _scan] call _log;

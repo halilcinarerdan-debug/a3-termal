@@ -211,3 +211,14 @@ RTI_sensor_blackHotIndices = [1, 3, 5];
     [[50, 25, 12.5, 6.25, 3.125], ["50 (çimen yok)", "25", "12.5", "6.25", "3.125 (en ayrıntılı)"], 2],
     false
 ] call CBA_settings_fnc_init;
+
+// A3TI (A3 Thermal Improvement) ile birlikte kullanım: görünümü A3TI veriyor; sensör efektlerimiz onunla çakışmasın diye A3TI yüklüyken varsayılan KAPALI.
+[
+    "RTI_sensor_withA3TI",
+    "CHECKBOX",
+    ["A3TI yüklüyken sensör efektleri", "A3TI (A3 Thermal Improvement) yüklüyken RTI'nin ekran işlemesi (kontrast, taban, gürültü) varsayılan KAPALI: görünümü A3TI veriyor, çifte post-process çakışabilir. Yine de denemek istersen aç. Araç ısı modeli, ortam modeli ve flaş bundan etkilenmez."],
+    _category,
+    false,
+    false,
+    _refresh
+] call CBA_settings_fnc_init;

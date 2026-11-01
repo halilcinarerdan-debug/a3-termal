@@ -8,6 +8,15 @@ bağımlılık yoktur: termal optikler çalışma anında config'ten taranır, s
 > statik olarak denetlendi; ama Arma 3 çalıştırılamadı. Neyin güvenilir, neyin deneysel olduğu aşağıda açık.
 > Test adımları: [`docs/TEST_ASAMA1.md`](docs/TEST_ASAMA1.md). Motorun sınırları: [`docs/FIZIBILITE.md`](docs/FIZIBILITE.md).
 
+## Konumlandırma (0.5.1): A3TI'nin üstüne tamamlayıcı
+
+Görünümü (ton, doku zenginliği) **A3 Thermal Improvement (A3TI)** modu veriyor; bu mod kapalı kaynak ve bizim post-process'imiz o görüntüyü yeniden üretemez
+(FIZIBILITE.md). RTI bu yüzden A3TI'nin yapmadığı parçaları ekleyen **tamamlayıcı** olarak konumlandı:
+araç ısınma/soğuma modeli, motor/egzoz/namlu lekesi, ortam modeli (sıcaklık, mevsim, saat), namlu flaşı.
+A3TI yüklüyse RTI'nin **ekran işlemesi (sensör) varsayılan KAPALI** (ayar: "A3TI yüklüyken sensör efektleri"); A3TI olmadan sensör modülü hâlâ bağımsız çalışır.
+A3TI'nin CfgPatches adı bilinmediğinden tespit "a3ti" içeren herhangi bir sınıfa bakar (`call RTI_fnc_diag` eşleşenleri yazar).
+A3TI yüklüyken diğer RTI modüllerinin (araç ısısı, flaş) nasıl davrandığı henüz **test edilmedi**.
+
 ## İstenenler ve gerçek durum
 
 | İstek | Durum | Nasıl / sınır |

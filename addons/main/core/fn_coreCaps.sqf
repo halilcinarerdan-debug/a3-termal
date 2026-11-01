@@ -29,6 +29,10 @@ RTI_cap_setVehicleTIPars = ["setvehicletipars"] call _has;
 RTI_cap_getVehicleTIPars = ["getvehicletipars"] call _has;
 RTI_cap_setAperture = ["setaperture"] call _has;
 
+// A3TI (A3 Thermal Improvement) yuklu mu? CfgPatches sinif adini bilmiyoruz: adinda "a3ti" gecen herhangi bir sinif.
+RTI_a3tiPatches = (configProperties [configFile >> "CfgPatches", "(toLower (configName _x)) find 'a3ti' >= 0", true]) apply {configName _x};
+RTI_cap_a3ti = (count RTI_a3tiPatches) > 0;
+
 RTI_setTIPars = if (RTI_cap_setVehicleTIPars) then {
     compile "params ['_v', '_a']; _v setVehicleTIPars _a;"
 } else {
@@ -57,3 +61,5 @@ diag_log format [
     isClass (configFile >> "CfgPatches" >> "cba_main"),
     RTI_cap_setAperture
 ];
+
+diag_log format ["[RTI] A3TI tespiti: %1 | eslesen CfgPatches: %2", RTI_cap_a3ti, RTI_a3tiPatches];

@@ -30,6 +30,12 @@ if ((_unit getVariable ["RTI_tiActive", false]) isNotEqualTo _active) then {
     _unit setVariable ["RTI_tiActive", _active, true];
 };
 
+// A3TI yüklüyse (kendi görüntü zinciri ve poz kontrolü var) sensör efektlerimiz varsayılan olarak uygulanmaz: çifte işleme / çakışma olmasın.
+// Ayar: "A3TI yüklüyken sensör efektleri". Zorlama (RTI_fnc_sensorForce) bundan etkilenmez.
+if (_active && {missionNamespace getVariable ["RTI_cap_a3ti", false]} && {!(missionNamespace getVariable ["RTI_sensor_withA3TI", false])}) exitWith {
+    call RTI_fnc_sensorStop;
+};
+
 if (_active && {RTI_sensor_enabled}) then {
     private _excluded = [_unit] call RTI_fnc_sensorExcluded;
 
