@@ -30,6 +30,33 @@ Sonuçları:
 - **Kendi atışım için flaş:** ekran uzayında; dünya nesnesine bağlı olmadığı için termal render'ını
   nasıl yaptığından bağımsızdır.
 
+## 2b. Sıcak nokta "hilesi" (araçlar için, v0.2)
+
+RHS/CUP dosyalarına erişim olmadan mekânsal sönümü yaklaşıklamak için: model dokusunu değiştirmek yerine
+**üstüne ısı lekesi** bırakılır.
+
+1. Nokta konumları araç sınıfı config'inden otomatik çözülür (sınıf tablosu yok):
+   - motor: `HitPoints >> HitEngine >> name` seçiminin `selectionPosition [ad, "HitPoints"]` konumu, modelin
+     sınır kutusunun tepesine doğru "Motor lekesi yükseltme" oranında kaldırılır (gövdeye gömülü kalmasın);
+   - egzoz: `Exhausts >> * >> position` bellek noktaları (en çok 2);
+   - namlu: ilk `gunBeg` / `gunEnd` bellek noktaları (namlu ucu ve kama). `attachTo [araç, ofset, bellekNoktası]`
+     ile taret/namlu dönerken noktalar onu izler.
+2. Her noktaya yumuşak kenarlı yuvarlak bir sprite (`kouleSvetlo`) konur; parlaklığı, mevcut zamansal modelden
+   gelen motor / namlu ısısına göre 4 kademeden biridir. Kenara doğru sönme sprite'ın radyal gradyanıdır.
+3. Yalnızca oyuncu termaldeyken, yalnızca en yakın N araç için, yerel (ağ trafiği yok) üretilir. Normal görüşte
+   hiçbir leke oluşturulmaz.
+
+Sınırları: sprite kameraya dönüktür (yandan bakınca "asılı leke"), gövde geometrisiyle kırpılır (içerideyse
+görünmez), gerçek dokunun yerini tutmaz. Yaklaşık ama mod-bağımsız çalışır. Doğrulama: `[true] call RTI_fnc_spotDebug`
+(normal görüşte noktaların yerini gösterir) ve `call RTI_fnc_diag` (çözülen noktaları yazar).
+
+Daha sağlam yol (v0.4): **kendi** küçük bir proxy modelimiz (düz disk) ve kendi radyal gradyanlı TI dokumuz;
+araç sınıfına göre bulunan motor noktasına eklenir. RHS/CUP dosyası gerekmez çünkü varlık bize aittir; ama TI doku
+formatı (kanal anlamları) bilinmeli → "Thermal Imaging Maps" sayfası.
+
+İnsanlar için bu hile **işe yaramaz**: leke ekleyebilir (yüz/el), üniformanın taban ısısını düşüremez; ayrıca her
+askere sprite eklemek hem ağır hem dağınık görünür.
+
 ## 3. Gerçek anatomik / mekânsal ısı için gereken (v0.3+)
 
 RHS ve CUP modellerinin termal dokularını yeniden yazmak gerekir:
@@ -57,6 +84,9 @@ istiyorsan v0.3 ayrı bir "veri modu" (`rti_data`) olarak planlanmalı.
 | A5 | `#particlesource` parçacıkları TI'de sıcak çizilir | `call RTI_fnc_testHeatSpot` (termalden bak) | "Başkalarının flaşı" kapatılır, farklı yöntem (nesne) denenir |
 | A6 | `Fired` olayı yalnızca atıcının yerel olduğu makinede çalışır | Dedicated sunucu + 2 istemci testi (TEST_ASAMA1 §7) | Olay yolu değişir |
 | A7 | PiP mercekli optikte `currentVisionMode` 2 döner ama ana ekran normaldir | PiP'li RHS/CUP optikle dene | "Efekt uygulanmayacak optikler" listesi doldurulur |
+| A8 | `selectionPosition [ad, "HitPoints"]` HitEngine seçiminin konumunu verir; RHS/CUP araçlarında `HitEngine >> name` dolu | `call RTI_fnc_diag` (sıcak nokta satırı) + `[true] call RTI_fnc_spotDebug` | Motor noktası çıkmaz; konum sınıf bazlı elle verilmeli |
+| A9 | `attachTo [araç, [0,0,0], bellekNoktası]` `#particlesource` için çalışır ve taret dönerken izler | `spotDebug` açıkken tareti çevir; termalde namlu lekesi izliyor mu | Namlu lekesi sabit kalır; ofset yöntemine geçilir |
+| A10 | `\A3\data_f\kouleSvetlo` yumuşak yuvarlak sprite'tır ve TI'de parlaklığına göre çizilir | `testHeatSpot` benzeri; termalde araç üstünde leke | Sprite görünmez ya da kare/sert çıkar; başka doku denenir |
 
 ## 5. Kullanıcıdan istenen dokümanlar
 

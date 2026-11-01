@@ -4,7 +4,7 @@ Arma 3'ün termal görüntüsünü (vanilla, **RHS**, **CUP** ve termal modu ola
 getirmeyi hedefleyen tek PBO'luk mod (`@RTI`, `rti_main.pbo`). Yalnızca **CBA_A3** gerektirir; RHS/CUP'a
 bağımlılık yoktur: termal optikler çalışma anında config'ten taranır, sınıf adı listesi koda gömülü değildir.
 
-> **Durum: v0.1, oyunda henüz test edilmedi.** Kod HEMTT ile derlendi (config rapify + 35 SQF dosyası + PBO) ve
+> **Durum: v0.2, oyunda henüz test edilmedi.** Kod HEMTT ile derlendi (config rapify + 41 SQF dosyası + PBO) ve
 > statik olarak denetlendi; ama Arma 3 çalıştırılamadı. Neyin güvenilir, neyin deneysel olduğu aşağıda açık.
 > Test adımları: [`docs/TEST_ASAMA1.md`](docs/TEST_ASAMA1.md). Motorun sınırları: [`docs/FIZIBILITE.md`](docs/FIZIBILITE.md).
 
@@ -14,6 +14,7 @@ bağımlılık yoktur: termal optikler çalışma anında config'ten taranır, s
 |-------|-------|---------------|
 | "Uzaylı" görüntü kalksın | **Kısmen** | Ekran işleme: kontrast/parlaklık (beyaza patlamayı kırar), sensör gürültüsü, yumuşatma. Ayarlanabilir. **İnsanın anatomik ısısı** (yüz/el sıcak, üniforma serin) ve **motordan uzaklaştıkça mekânsal sönümleme** ise modelin termal dokusuna (TI haritası) bağlıdır; script/config ile yapılamaz → bkz. FIZIBILITE.md |
 | Motor / araç ısısı zamanla değişsin | **Deneysel** | Motor, tekerlek-palet ve namlu için ısınma/soğuma modeli (`setVehicleTIPars`). Komut yoksa kendini kapatır. Dizideki sıranın (motor/tekerlek/silah) doğrulanması gerek |
+| Motordan / egzozdan / namludan uzaklaştıkça sönen ısı (mekânsal) | **Deneysel (hile)** | Model dokusuna dokunmadan: sınıf config'inden motor (`HitEngine`), egzoz (`Exhausts`) ve namlu (`gunBeg`/`gunEnd`) noktaları **otomatik** bulunur; oraya ısıya göre parlaklığı değişen, kenarı yumuşak bir ısı lekesi (parçacık) bırakılır. Uzaklaştıkça sönmesi sprite'ın radyal gradyanından gelir. RHS/CUP sınıf tablosu gerekmez. Gerçek "boyama" değildir (bkz. FIZIBILITE.md §2b) |
 | Namlu ateşi (muzzle flash) termalde parlasın | **Kendi silahım: güvenilir. Başkaları: deneysel** | Kendi atışım: ekran flaşı (PP), dünya nesnesine bağlı değil. Başkalarının atışı: namlu ucunda kısa ömürlü sıcak parçacık; parçacığın TI'de parlak çizilip çizilmediği **doğrulanmadı** (`call RTI_fnc_testHeatSpot`) |
 | Her türlü ışık kaynağı (lamba, far, fişek) | **Yapılmadı (v0.2)** | Parçacık yönteminin TI'de çalıştığı doğrulanınca aynı altyapıya eklenecek |
 | RHS / CUP scope'ları | **Hazır** | Çalışma anında taranır, sonuç RPT'de (`[RTI][SCOPE]`) |
@@ -44,6 +45,7 @@ addons/main/                             -> rti_main.pbo
     sensor/     termal modda ekran işleme: ColorCorrections + FilmGrain + DynamicBlur
     flash/      namlu flaşı: kendi ekran flaşı + başkaları için sıcak parçacık (CBA hedef olayı)
     vehicle/    araç motor/tekerlek/namlu ısınma-soğuma modeli
+    spot/       motor/egzoz/namlu üzerinde ısıya bağlı ısı lekesi (noktalar sınıftan otomatik çözülür)
 ```
 
 Tasarım ilkeleri: termalde kimse yokken maliyet sıfır (oyuncular `RTI_tiActive` bayrağı yayınlar; atış olayları
@@ -57,6 +59,7 @@ belgelenemeyen komutlar doğrudan yazılmaz (`supportInfo` ile tespit edilip `co
 | Sensör | aktif, parlaklık, kontrast, gürültü, yumuşatma, **palet kutbu** (beyaz/siyah sıcak), efekt uygulanmayacak optikler |
 | Namlu flaşı | aktif, kendi ekran flaşı (+şiddet, sönme), başkalarının flaşı (deneysel), azami mesafe |
 | Araç ısı modeli | aktif, soğuma çarpanı, namlu ısınma çarpanı, güncelleme mesafesi, **TI parametre sırası** |
+| Araç sıcak noktaları | aktif, şiddet, aynı anda en fazla araç, **motor lekesi yükseltme** |
 | Genel | ayrıntılı günlük (RPT) |
 
 Termal paletin kutbu (beyaz/siyah sıcak) oyundan okunamıyor; kendi flaşının doğru yönde çizilmesi için ayarı
@@ -68,6 +71,7 @@ kullandığın paletle eşle (optikte `N`).
 call RTI_fnc_diag;                      // komut desteği, optik modları, araç parametreleri -> pano + RPT
 call RTI_fnc_testHeatSpot;              // termalde parçacık "sıcak nokta" görünüyor mu?
 [] call RTI_fnc_diagTrace;              // bindiğin / baktığın aracın TI parametrelerini 120 sn boyunca RPT'ye yazar
+[true] call RTI_fnc_spotDebug;          // normal görüşte: motor/egzoz/namlu noktalarını araç üstünde işaretle ([false] kapatır)
 ```
 
 ## Bilinen sınırlar
@@ -75,7 +79,10 @@ call RTI_fnc_testHeatSpot;              // termalde parçacık "sıcak nokta" g�
 - Render-target (PiP) mercekli optiklerde ana ekran normal görüntüdür; sensör efekti onu bozar. Böyle bir optik
   varsa sınıf adını "Efekt uygulanmayacak optikler" listesine yaz.
 - Araç ısı modeli yalnızca araçlara uygulanır; yaya silahlarının namlu ısısı için TI parametresi yok.
-- Mekânsal ısı dağılımı (motorun çevresi, insan vücudu bölgeleri) bu modun kapsamı dışında; model dokusu gerekir.
+- Sıcak noktalar yaklaşık bir görünümdür: kameraya dönük sprite'lardır (yan açıdan "asılı leke" gibi durabilir),
+  gövde geometrisiyle kırpılır ve normal görüşte oluşturulmaz. Gerçek dağılım model dokusudur.
+- İnsan anatomisi (yüz/el sıcak, üniforma serin) bu yöntemle yapılamaz: parçacık ekleyebilir ama üniformanın
+  taban ısısını düşüremez. Model dokusu gerekir (FIZIBILITE.md §3).
 
 ## Yol haritası
 
@@ -85,5 +92,7 @@ call RTI_fnc_testHeatSpot;              // termalde parçacık "sıcak nokta" g�
 | 2 | Kendi silahım için ekran flaşı | ✅ hazır (test bekliyor) |
 | 3 | Başkalarının namlu ateşi (sıcak parçacık) | 🧪 deneysel (TI'de görünürlük doğrulanacak) |
 | 4 | Araç ısınma/soğuma modeli | 🧪 deneysel (`setVehicleTIPars` doğrulanacak) |
-| 5 | Işık kaynakları: lamba, far, fişek | ⏳ #3 doğrulanınca |
-| 6 | Üniforma / araç TI haritaları (anatomik ısı, motor gradyanı) | ⏳ model verisi gerektirir, bkz. FIZIBILITE.md |
+| 5 | Araç sıcak noktaları (motor/egzoz/namlu lekesi) | 🧪 deneysel (parçacık TI + `selectionPosition` doğrulanacak) |
+| 6 | Işık kaynakları: lamba, far, fişek | ⏳ #3 doğrulanınca |
+| 7 | Kendi proxy modelimiz + kendi TI dokumuz (gerçek radyal gradyan, RHS/CUP dosyası gerekmez) | ⏳ TI doku formatı belgesi gerekir |
+| 8 | Üniforma TI haritaları (anatomik ısı) | ⏳ model verisi gerektirir, bkz. FIZIBILITE.md |

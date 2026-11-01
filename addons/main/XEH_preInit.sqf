@@ -21,3 +21,6 @@ call RTI_fnc_flashInit;
 // 3. Araç
 call RTI_fnc_vehInitSettings;
 call RTI_fnc_vehInit;
+
+// 4. Sıcak noktalar
+call RTI_fnc_spotInitSettings;

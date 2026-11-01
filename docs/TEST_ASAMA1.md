@@ -89,6 +89,29 @@ sür (20 sn) → dur → ateş et (varsa silah) → motoru kapat**. Satırlardak
 
 Komut yoksa (`yetenek | setVehicleTIPars=false`) bu bölüm atlanır.
 
+## 5b. Araç sıcak noktaları (motor / egzoz / namlu lekesi)
+
+**Önce normal görüşte noktalar doğru yerde mi:** bir tank veya zırhlıya 10-30 m yaklaş, imleçle araca bak:
+
+```sqf
+[true] call RTI_fnc_spotDebug;
+```
+
+Araç üstünde turuncu (motor/egzoz) ve kırmızı (namlu) işaretçiler ve "motor", "egzoz", "namlu ucu", "kama" etiketleri
+çıkmalı. Taret döndüğünde namlu işaretçileri onu izlemeli.
+- Motor işaretçisi gövdenin **içinde** ya da **havada** ise Addon Options → Araç sıcak noktaları → "Motor lekesi yükseltme"yi ayarla.
+- Hiç işaretçi yoksa RPT'de `[RTI][SPOT] <sınıf>: 0 nokta` satırı var mı bak (HitEngine seçimi boş olabilir). **O satırları gönder.**
+- Kapatmak: `[false] call RTI_fnc_spotDebug;`
+
+**Sonra termalde:** motoru aç, birkaç saniye bekle, termal optikten araca bak.
+- Motor/egzoz üzerinde kenarı yumuşak bir parlak leke görünmeli; motoru kapatınca yavaşça sönmeli
+  (hızlı görmek için "Soğuma süresi çarpanı" = 0.1).
+- Tank topuyla ateş edince namlu ucunda leke belirmeli, birkaç dakikada sönmeli.
+- Normal görüşe dönünce lekeler **görünmemeli** (termalden çıkınca silinir).
+- Leke hiç görünmüyorsa §4 testi (`testHeatSpot`) de görünmüyordur: parçacıklar TI'de çizilmiyor demektir; bana söyle.
+
+**Gönder:** ekran görüntüsü (termalde), kullandığın araç sınıfı, `[RTI][SPOT]` RPT satırı.
+
 ## 6. Genel sağlık
 
 - RPT'de `[RTI]` ile başlayan **hata** satırı (`Error in expression`, `Undefined variable`) olmamalı. Varsa gönder.

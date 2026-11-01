@@ -17,7 +17,7 @@ private _log = {
 };
 
 format [
-    "surum 0.1.0 | CBA=%1 | rti_main=%2",
+    "surum 0.2.0 | CBA=%1 | rti_main=%2",
     isClass (configFile >> "CfgPatches" >> "cba_main"),
     isClass (configFile >> "CfgPatches" >> "rti_main")
 ] call _log;
@@ -87,6 +87,10 @@ if (!isNull _veh && {!(_veh isKindOf "CAManBase")}) then {
         _veh getVariable ["RTI_whl", []],
         _veh getVariable ["RTI_wpn", []],
         [_veh] call RTI_fnc_vehProfile
+    ] call _log;
+    format [
+        "  sicak noktalar (kanal 0 motor, 1 namlu; kanal, bellek noktasi, ofset, boyut, kazanc, etiket): %1",
+        [_veh] call RTI_fnc_spotResolve
     ] call _log;
 } else {
     "arac: yok (bir araca bin ya da imleci araca tut)" call _log;

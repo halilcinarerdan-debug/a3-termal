@@ -19,9 +19,9 @@ class CfgPatches
         weapons[] = {};
         requiredVersion = 2.02;
         requiredAddons[] = {"cba_main"};
-        version = 0.1;
-        versionStr = "0.1.0";
-        versionAr[] = {0,1,0};
+        version = 0.2;
+        versionStr = "0.2.0";
+        versionAr[] = {0,2,0};
     };
 };
 
@@ -42,6 +42,9 @@ class CfgFunctions
 
         // 3. Arac: motor / tekerlek / namlu isinma-sogunma modeli
         #include "vehicle\CfgFunctions.hpp"
+
+        // 4. Sicak noktalar: motor / egzoz / namlu uzerinde isiya bagli isi lekesi (sinifa gore otomatik)
+        #include "spot\CfgFunctions.hpp"
     };
 };
 
@@ -49,6 +52,7 @@ class CfgFunctions
 class CfgCloudlets
 {
     #include "flash\CfgCloudlets.hpp"
+    #include "spot\CfgCloudlets.hpp"
 };
 
 // CBA XEH: tum makinelerde (sunucu, istemci, HC) mod yuklenince calisir.
