@@ -6,6 +6,20 @@ ortamının ağında kapalı; şu wiki sayfaları kullanıcı tarafından yapı�
 `setParticleClass`. Bunlarla doğrulananlar ✅ ile işaretlidir; geri kalanı "doğrulanmadı"dır ve oyunda ya da
 resmi dokümanla sınanmalıdır.
 
+## 0. Güncelleme (0.3.0): oyun içi gözleme göre öncelik değişti
+
+Oyun içi ekran görüntülerinden (Zeus kamerası) çıkanlar:
+- **Asker yakın planı çok iyi**: yüz/boyun sıcak, kask ve tişört daha serin, yumuşak geçişler. Anatomik üniforma TI
+  haritası projesi (§3) bu yüzden **öncelik dışı**; oyunun kendi insan dokusu yeterli görünüyor.
+- "Uzaylı" hissini veren: (a) zemin orta gri ve (b) çimen yamaları siyah-gri leke olarak çizildiği için asker gövdesi
+  (yine orta gri) uzaktan zeminden ayrışmıyor; (c) araç gövdesi tek tip beyaz.
+- Önceki sürümlerdeki varsayılan "kontrast 0.85, parlaklık 0.95" siyah-beyaz farkını **sıkıştırıyordu** (beyaza patlama
+  varsayımıyla yazılmıştı; yanlıştı). 0.3.0'da varsayılan **Agresif**: kontrast ↑, siyah seviyesi (ofset) ↓, bulanıklık ↑.
+- Çimen yamaları araziye çizilen clutter'dır; sınıf adına bağlı termal ayarı yok. Ton ayarı + bulanıklık yamaları siler;
+  gerçek kaldırma arazi ızgarasıdır (Video "Arazi ayrıntısı").
+- Hava / mevsim: `env/` modülü hesaplar (hava sıcaklığı, güneş, bulutluluk, sis, yağmur). Nesne bazında kontrast yalnızca
+  araçlarda (`setVehicleTIPars`) ayarlanabilir; statik nesneleri (bina, kaya) oyun kendisi çizer.
+
 ## 1. Motor termali nasıl çiziyor (özet)
 
 Arma 3'te bir nesnenin termal görünümü, **modelin kendi termal dokusundan** (`*_ti_ca.paa`, rvmat içindeki

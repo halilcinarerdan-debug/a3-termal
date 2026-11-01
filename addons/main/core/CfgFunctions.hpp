@@ -14,4 +14,7 @@ class core
 
     // Uniformalari karakter modeline gore gruplar (anatomik isi isinin buyuklugunu olcer)
     class exportUniforms {};
+
+    // Cimen clutter siniflarini ve yakin arazi nesnelerini listeler (cimen yamalarinin kaynagi)
+    class exportClutter {};
 };

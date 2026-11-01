@@ -17,7 +17,7 @@ private _log = {
 };
 
 format [
-    "surum 0.2.2 | CBA=%1 | rti_main=%2",
+    "surum 0.3.0 | CBA=%1 | rti_main=%2",
     isClass (configFile >> "CfgPatches" >> "cba_main"),
     isClass (configFile >> "CfgPatches" >> "rti_main")
 ] call _log;
@@ -66,6 +66,14 @@ if (isClass _modes) then {
 } else {
     "  bu silah/optikte OpticsModes yok" call _log;
 };
+
+// Ortam modeli ve sensör değerleri
+format [
+    "ortam [kontrastK, bulaniklikK, gurultuK, gunes, sicaklikC]=%1 | sensor [parlaklik, kontrast, ofset, gurultu, bulaniklik]=%2 | hazir ayar=%3",
+    missionNamespace getVariable ["RTI_env_k", "?"],
+    if (missionNamespace getVariable ["RTI_env_enabled", false]) then {call RTI_fnc_sensorParams} else {"ortam kapali"},
+    missionNamespace getVariable ["RTI_sensor_preset", "?"]
+] call _log;
 
 // Optik taraması
 private _scan = missionNamespace getVariable ["RTI_thermalOptics", []];

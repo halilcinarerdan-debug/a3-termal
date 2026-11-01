@@ -5,8 +5,8 @@ author = "RTI"
 
 [version]
 major = 0
-minor = 2
-patch = 2
+minor = 3
+patch = 0
 git_hash = 0
 
 [files]

@@ -16,6 +16,9 @@
 
 params ["_unit", "_visionMode"];
 
+// Zorlama açıkken (RTI_fnc_sensorForce: test / Zeus kamerası) görüş modu olayları efekte dokunmaz.
+if (missionNamespace getVariable ["RTI_sensor_forced", false]) exitWith {};
+
 if (isNull _unit) exitWith {
     call RTI_fnc_sensorStop;
 };

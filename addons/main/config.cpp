@@ -19,9 +19,9 @@ class CfgPatches
         weapons[] = {};
         requiredVersion = 2.08;
         requiredAddons[] = {"cba_main"};
-        version = 0.2;
-        versionStr = "0.2.2";
-        versionAr[] = {0,2,2};
+        version = 0.3;
+        versionStr = "0.3.0";
+        versionAr[] = {0,3,0};
     };
 };
 
@@ -45,6 +45,9 @@ class CfgFunctions
 
         // 4. Sicak noktalar: motor / egzoz / namlu uzerinde isiya bagli isi lekesi (sinifa gore otomatik)
         #include "spot\CfgFunctions.hpp"
+
+        // 5. Ortam: hava sicakligi / mevsim / saat / sis / yagmur -> termal kontrast
+        #include "env\CfgFunctions.hpp"
     };
 };
 

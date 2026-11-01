@@ -21,6 +21,11 @@ if (isNull player || {currentVisionMode player != 2}) exitWith {
     call RTI_fnc_spotClearAll;
 };
 
+// Ortam modeli (20 sn'de bir yenilenir) -> güneşte duran araç gövdesi motor kapalıyken de bir miktar ısınmış sayılır.
+[] call RTI_fnc_envUpdate;
+
+private _solarFloor = if (RTI_env_enabled) then {(RTI_env_k select 3) * RTI_env_vehSolar} else {0};
+
 private _now = serverTime;
 private _map = RTI_veh_parMapArr;
 private _k = RTI_veh_coolMult / 0.6931;
@@ -57,7 +62,8 @@ private _seen = [];
 
         if (RTI_cap_setVehicleTIPars) then {
             private _pars = [0, 0, 0];
-            _pars set [_map select 0, _eng];
+            // Güneş tabanı yalnızca oyunun termal parametresine yazılır; sıcak nokta (spot) gerçek motor ısısını kullanır.
+            _pars set [_map select 0, _eng max _solarFloor];
             _pars set [_map select 1, _whl];
             _pars set [_map select 2, _wpn];
 

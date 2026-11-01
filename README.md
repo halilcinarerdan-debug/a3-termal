@@ -12,8 +12,9 @@ bağımlılık yoktur: termal optikler çalışma anında config'ten taranır, s
 
 | İstek | Durum | Nasıl / sınır |
 |-------|-------|---------------|
-| "Uzaylı" görüntü kalksın | **Kısmen** | Ekran işleme: kontrast/parlaklık (beyaza patlamayı kırar), sensör gürültüsü, yumuşatma. Ayarlanabilir. **İnsanın anatomik ısısı** (yüz/el sıcak, üniforma serin) ve **motordan uzaklaştıkça mekânsal sönümleme** ise modelin termal dokusuna (TI haritası) bağlıdır; script/config ile yapılamaz → bkz. FIZIBILITE.md |
-| Motor / araç ısısı zamanla değişsin | **Deneysel** | Motor, tekerlek-palet ve namlu için ısınma/soğuma modeli (`setVehicleTIPars`). Komutun varlığı, sırası `[motor+gövde, tekerlek/palet, ana silah]` ve yerel etkisi BI wiki ile **doğrulandı**; oyunun değerlerimizi her karede ezip ezmediği oyunda sınanacak |
+| "Uzaylı" görüntü kalksın | **Büyük ölçüde (script ile)** | Gözlemlenen neden: zemin orta gri, çimen yamaları siyah-gri leke, asker gövdesi zemine yakın gri (uzaktan seçilmiyor), araç tek tip beyaz. Çözüm: **Agresif** ton ayarı (kontrast ↑, **siyah seviyesi ↓**: zemin ve çimen siyaha, sıcak hedefler beyaza), bulanıklık (ince çimen desenini yutar), ortam modeli, araç gövde ısısı modeli (tek tip beyaz yerine motor lekeli orta gri). **Asker yüz/boyun/giysi dağılımı zaten iyi** (oyunun kendi dokusu): üniforma yeniden boyamaya gerek görünmüyor |
+| Çimenlerdeki termal kalksın | **Kısmen** | Çimen bir nesne değil, araziye çizilen "clutter"; sınıf adına bağlı ayrı termal ayarı yok. Agresif ton + bulanıklık yamaları büyük ölçüde siler. Gerçek kaldırma: arazi ızgarası (Video "Arazi ayrıntısı" ya da "Termalde çimeni kapat"; normal görüşte de çimeni siler, geçişte takılabilir). Kaynak araştırması: `call RTI_fnc_exportClutter` |
+| Hava sıcaklığı / mevsime göre kontrast | **Deneysel** | Ortam modeli: sıcaklık (ACE Weather varsa onun değeri, yoksa tarih/enlem/saatten tahmin), güneş yüklemesi, bulutluluk, sis, yağmur → kontrast / bulanıklık / gürültü çarpanı; güneşte duran araç gövdesi zemine eşitlenir. Nesne bazında kontrast yalnızca **araçlarda** mümkün (`setVehicleTIPars`); bina, kaya gibi statik nesneleri oyun kendisi çiziyor |
 | Motordan / egzozdan / namludan uzaklaştıkça sönen ısı (mekânsal) | **Deneysel (hile)** | Model dokusuna dokunmadan: sınıf config'inden motor (`HitEngine`), egzoz (`Exhausts`) ve namlu (`gunBeg`/`gunEnd`) noktaları **otomatik** bulunur; oraya ısıya göre parlaklığı değişen, kenarı yumuşak bir ısı lekesi (parçacık) bırakılır. Uzaklaştıkça sönmesi sprite'ın radyal gradyanından gelir. RHS/CUP sınıf tablosu gerekmez. Gerçek "boyama" değildir (bkz. FIZIBILITE.md §2b) |
 | Namlu ateşi (muzzle flash) termalde parlasın | **Kendi silahım: güvenilir. Başkaları: deneysel** | Kendi atışım: ekran flaşı (PP), dünya nesnesine bağlı değil. Başkalarının atışı: namlu ucunda kısa ömürlü sıcak parçacık; parçacığın TI'de parlak çizilip çizilmediği **doğrulanmadı** (`call RTI_fnc_testHeatSpot`) |
 | Her türlü ışık kaynağı (lamba, far, fişek) | **Yapılmadı (v0.2)** | Parçacık yönteminin TI'de çalıştığı doğrulanınca aynı altyapıya eklenecek |
@@ -71,6 +72,7 @@ addons/main/                             -> rti_main.pbo
     flash/      namlu flaşı: kendi ekran flaşı + başkaları için sıcak parçacık (CBA hedef olayı)
     vehicle/    araç motor/tekerlek/namlu ısınma-soğuma modeli
     spot/       motor/egzoz/namlu üzerinde ısıya bağlı ısı lekesi (noktalar sınıftan otomatik çözülür)
+    env/        ortam modeli: hava sıcaklığı / mevsim / saat / sis / yağmur -> kontrast, bulanıklık, gürültü
 ```
 
 Tasarım ilkeleri: termalde kimse yokken maliyet sıfır (oyuncular `RTI_tiActive` bayrağı yayınlar; atış olayları
@@ -81,7 +83,8 @@ belgelenemeyen komutlar doğrudan yazılmaz (`supportInfo` ile tespit edilip `co
 
 | Kategori | Öne çıkanlar |
 |----------|--------------|
-| Sensör | aktif, parlaklık, kontrast, gürültü, yumuşatma, **palet kutbu** (beyaz/siyah sıcak), efekt uygulanmayacak optikler |
+| Sensör | aktif, **hazır ayar (Agresif / Dengeli / Yumuşak / Elle)**, [elle] parlaklık / kontrast / **siyah seviyesi** / gürültü / bulanıklık, palet kutbu, hariç optikler, termalde çimeni kapat (deneysel) |
+| Ortam (hava / mevsim) | aktif, etki şiddeti, elle hava sıcaklığı (test), yarıküre, araç güneş yüklemesi |
 | Namlu flaşı | aktif, kendi ekran flaşı (+şiddet, sönme), başkalarının flaşı (deneysel), azami mesafe |
 | Araç ısı modeli | aktif, soğuma çarpanı, namlu ısınma çarpanı, güncelleme mesafesi, **TI parametre sırası** |
 | Araç sıcak noktaları | aktif, şiddet, aynı anda en fazla araç, **motor lekesi yükseltme** |
@@ -98,11 +101,14 @@ call RTI_fnc_diag;                      // komut desteği, optik modları, araç
 call RTI_fnc_testHeatSpot;              // termalde parçacık "sıcak nokta" görünüyor mu?
 [] call RTI_fnc_diagTrace;              // bindiğin / baktığın aracın TI parametrelerini 120 sn boyunca RPT'ye yazar
 [true] call RTI_fnc_spotDebug;          // normal görüşte: motor/egzoz/namlu noktalarını araç üstünde işaretle ([false] kapatır)
-call RTI_fnc_exportUniforms;            // üniformaları karakter modeline göre gruplar: anatomik ısı için kaç model boyanacak?
+call RTI_fnc_exportUniforms;            // üniformaları karakter modeline göre gruplar (anatomik ısı artık öncelikli değil)
+call RTI_fnc_exportClutter;             // çimen clutter sınıfları + yakın arazi nesneleri (çimen yamalarının kaynağı)
+[true] call RTI_fnc_sensorForce;        // görüş moduna bakmadan RTI efektlerini aç (Zeus kamerası / A-B testi); [false] kapatır
 ```
 
 ## Bilinen sınırlar
 
+- **Zeus kamerası:** Zeus'ta "N" ile açılan termal oyuncu biriminin görüş modunu değiştirmez; RTI efektleri kendiliğinden devreye girmez. Zeus'ta test için `[true] call RTI_fnc_sensorForce;` kullan (görüntüleri A/B için bu yüzden aynı komutla karşılaştır).
 - Render-target (PiP) mercekli optiklerde ana ekran normal görüntüdür; sensör efekti onu bozar. Böyle bir optik
   varsa sınıf adını "Efekt uygulanmayacak optikler" listesine yaz.
 - Araç ısı modeli yalnızca araçlara uygulanır; yaya silahlarının namlu ısısı için TI parametresi yok.
@@ -123,4 +129,5 @@ call RTI_fnc_exportUniforms;            // üniformaları karakter modeline gör
 | 6 | Işık kaynakları: lamba, far, fişek | ⏳ #3 doğrulanınca |
 | 7 | İnsan vücut ısısı çarpanı (taban parlaklık, koşma/yatma/yaralanma ile metabolizma) | ⏳ `setVehicleTIPars` askerde çalışıyor mu testi gerekir (TEST §5b2) |
 | 8 | Kendi proxy modelimiz + kendi TI dokumuz (gerçek radyal gradyan, RHS/CUP dosyası gerekmez) | ⏳ kanal anlamları belli ✅; MLOD p3d + rvmat + PAA üretimi kalan iş |
-| 9 | Üniforma TI haritaları (anatomik bölge dağılımı, alfa kanalı) | ⏳ model verisi gerektirir, bkz. FIZIBILITE.md |
+| 9 | Üniforma TI haritaları (anatomik bölge dağılımı, alfa kanalı) | ⏸ gerek görünmüyor: asker yüz/giysi dokusu zaten iyi (oyun içi gözlem) |
+| 10 | Ortam modeli (sıcaklık / mevsim / saat / hava -> kontrast), Agresif ton, siyah seviyesi | 🧪 deneysel (0.3.0, test bekliyor) |

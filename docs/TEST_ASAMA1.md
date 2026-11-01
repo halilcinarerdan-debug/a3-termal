@@ -51,6 +51,26 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2c. Hazır ayarlar, siyah-beyaz farkı, ortam modeli ve Zeus
+
+**Zeus kamerasında test ediyorsan:** "N" ile açılan termal oyuncu birimini etkilemez; RTI otomatik devreye girmez.
+Termal görüntüdeyken debug konsolunda:
+
+```sqf
+[true] call RTI_fnc_sensorForce;     // B: RTI efektleri açık
+[false] call RTI_fnc_sensorForce;    // A: vanilla
+```
+
+1. **Hazır ayar karşılaştırması:** Addon Options → Sensör → "Hazır ayar" = Agresif / Dengeli / Yumuşak. Agresif'te:
+   zemin ve çimen yamaları **siyaha yakın**, sıcak cisimler beyaz, görüntü belirgin yumuşak olmalı. Uzaktaki asker zeminden
+   ayrışıyor mu? **Siyah-beyaz farkı hâlâ az ise**: Hazır ayar = Elle, kontrast 2.2-2.8, siyah seviyesi -0.3...-0.4 dene
+   ve değerleri bana yaz.
+2. **Ortam modeli:** "Hava sıcaklığını elle ver" aç; 35 °C ile -5 °C arasında değiştir. Sıcakta kontrast belirgin
+   düşmeli (nesneler zeminle eşitlenir), soğukta artmalı. `call RTI_fnc_diag` satırında `ortam [...]` değerlerini gör.
+   Kontrast beklediğinden düşük kalıyorsa "Ortam etkisi şiddeti"ni 0'a çek (ortam etkisini kapatır).
+3. **Çimen:** Agresif'te çimen yamaları yeterince sönüyor mu? Sönmüyorsa `call RTI_fnc_exportClutter` çıktısını gönder;
+   gerekirse "Termalde çimeni kapat"ı dene (uyarı: ekran kısa süre takılabilir).
+
 ## 3. Kendi silahım için flaş
 
 Termal optikle birkaç tek atış, sonra otomatik atış.

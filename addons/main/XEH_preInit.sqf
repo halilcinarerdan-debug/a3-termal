@@ -14,6 +14,9 @@ call RTI_fnc_coreCaps;
 // 1. Sensör
 call RTI_fnc_sensorInitSettings;
 
+// 1b. Ortam (hava / mevsim): sensör ayarlarından sonra, diğerlerinden önce
+call RTI_fnc_envInitSettings;
+
 // 2. Flaş
 call RTI_fnc_flashInitSettings;
 call RTI_fnc_flashInit;
