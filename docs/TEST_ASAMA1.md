@@ -72,7 +72,12 @@ Termal görüntüdeyken debug konsolunda:
 2. **Ortam modeli:** "Hava sıcaklığını elle ver" aç; 35 °C ile -5 °C arasında değiştir. Sıcakta kontrast belirgin
    düşmeli (nesneler zeminle eşitlenir), soğukta artmalı. `call RTI_fnc_diag` satırında `ortam [...]` değerlerini gör.
    Kontrast beklediğinden düşük kalıyorsa "Ortam etkisi şiddeti"ni 0'a çek (ortam etkisini kapatır).
-3. **Çimen:** Agresif'te çimen yamaları yeterince sönüyor mu? Sönmüyorsa `call RTI_fnc_exportClutter` çıktısını gönder;
+3. **Zemin tabanı / toprak:** Toprak artık simsiyah olmamalı (koyu gri), çimen yamaları toprakla aynı koyu griye oturup kaybolmalı,
+   **yukarı baktığında gökyüzü siyah** olmalı. Hazır ayar = Elle ile "Zemin tabanı" sürgüsünü 0 (saf siyah) ↔ 0.3 oynat. Yüzeye göre
+   taban açıkken bir asfalt yola, sonra kuma/toprağa bak (gece): taban asfaltta belirgin yüksek, kumda düşük olmalı. `call RTI_fnc_diag`
+   satırı `yuzey [zeminK, gokK, grup, sinif]` bakılan yüzeyi gösterir; **grup yanlışsa (ör. toprak yerine bilinmeyen) o satırı ve
+   RPT'deki `[RTI][SURF]` satırlarını gönder**, eşlemeyi düzeltelim.
+4. **Çimen:** Agresif'te çimen yamaları yeterince sönüyor mu? Sönmüyorsa `call RTI_fnc_exportClutter` çıktısını gönder;
    gerekirse "Termalde çimeni kapat"ı dene (uyarı: ekran kısa süre takılabilir).
 
 ## 2d. Karakter / silah ısısı kimden geliyor? (ayrıştırma testi)

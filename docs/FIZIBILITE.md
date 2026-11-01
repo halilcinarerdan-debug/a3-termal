@@ -18,6 +18,11 @@ Oyun içi ekran görüntülerinden (Zeus kamerası) çıkanlar:
 - Yukarıdan bakınca çimen, çapraz iki levhadan oluşan "X" öbekleri olarak **orta gri** (~0.47) çizilir, aralarındaki zemin siyah,
   tank ~0.85. Çimeni siyaha gömmek bir **eşik** işidir: yaklaşık kontrast 2.4-2.6 ve siyah seviyesi -0.43...-0.45 ("Siyah"
   hazır ayarı); bedeli, zemine yakın gri tonların (insan giysisi) de koyulaşmasıdır.
+- **Toprak simsiyah olmasın + çimen görünmesin + gökyüzü siyah** aynı anda doğrusal bir ayarla olmaz: çimen, toprak ve gökyüzü
+  siyaha gömülünce hepsi aynı sıfıra düşer. Çözüm: kontrastın ARDINDAN ayrı bir "zemin tabanı" katmanı (çimen ve toprak eşit koyu
+  griye oturur) + bakış yukarı kalkınca tabanın sıfırlanması (gökyüzü siyah). Taban, kameranın baktığı yüzeyin CfgSurfaces
+  sınıfına göre çarpanlanır (asfalt/kaya/kum/kar/su/toprak/çimen; sınıf adındaki anahtar kelimeler + soundEnviron). CfgSurfaces'te
+  termal özellik olmadığı için bu bir tahmin tablosudur ve yüzeyi boyamaz; ekranın tabanını sahneye uydurur (AGC gibi).
 - Çimen yamaları araziye çizilen clutter'dır; sınıf adına bağlı termal ayarı yok. Ton ayarı + bulanıklık yamaları siler;
   gerçek kaldırma arazi ızgarasıdır (Video "Arazi ayrıntısı").
 - Hava / mevsim: `env/` modülü hesaplar (hava sıcaklığı, güneş, bulutluluk, sis, yağmur). Nesne bazında kontrast yalnızca

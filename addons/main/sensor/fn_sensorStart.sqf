@@ -4,6 +4,7 @@
 
     Termal efekt zincirini etkinleştirir. Zaten etkinse yalnızca ayarları yeniden uygular.
       - Ortam modelini bir kez günceller ve 30 sn'lik bir PFH ile yeniler (yalnızca termal açıkken).
+      - Zemin tabanı için bakılan yüzeyi 1.5 sn'lik bir PFH ile izler (yalnızca termal açıkken).
       - "Termalde çimeni kapat" açıksa arazi ızgarasını 50'ye (çimensiz) çeker; çıkışta geri yüklenir.
 
     Parametreler: yok
@@ -20,6 +21,15 @@ if ((missionNamespace getVariable ["RTI_env_pfh", -1]) < 0) then {
         [] call RTI_fnc_envUpdate;
         call RTI_fnc_sensorRefresh;
     }, 30] call CBA_fnc_addPerFrameHandler;
+};
+
+// Zemin tabanı: bakılan yüzey ve bakış yönü (gökyüzü) 1.5 sn'de bir izlenir.
+call RTI_fnc_surfaceUpdate;
+
+if ((missionNamespace getVariable ["RTI_surf_pfh", -1]) < 0) then {
+    RTI_surf_pfh = [{
+        call RTI_fnc_surfaceUpdate;
+    }, 1.5] call CBA_fnc_addPerFrameHandler;
 };
 
 // Çimen (deneysel, kapalı gelir): çimen yamalarını kaldırmanın tek gerçek yolu arazi ızgarasıdır.

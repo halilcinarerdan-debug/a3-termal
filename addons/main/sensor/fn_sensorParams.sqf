@@ -11,25 +11,25 @@
     (negatif ofset) zemini ve çimen yamalarını siyaha yaklaştırır, sıcak cisimleri beyazda bırakır;
     böylece arka plan dokusu söner, hedef öne çıkar. Bulanıklık ince çimen desenini yutar.
 
-    Hazır ayar değerleri: [parlaklık, kontrast, siyahSeviyesi(ofset), gürültü, bulanıklık]
+    Hazır ayar değerleri: [parlaklık, kontrast, siyahSeviyesi(ofset), gürültü, bulanıklık, zeminTabanı]
       1 Agresif : 2.2 / -0.30  (çimen ~0.47 gri -> ~0.13; tank ~0.85 -> ~0.97)
       4 Siyah   : 2.6 / -0.45  (çimen siyaha gömülür; zayıf ısı kaynakları da siyaha gider)
     Hesap, ColorCorrections kontrastının 0.5 gri etrafında döndüğü varsayımına dayanır (doğrulanmadı);
     oyunda sürgülerle ayarlanır.
 
     Parametreler: yok
-    Dönüş: ARRAY - [parlaklık, kontrast, ofset, gürültü, bulanıklık]
+    Dönüş: ARRAY - [parlaklık, kontrast, ofset, gürültü, bulanıklık, zeminTabanı]
 */
 
 private _base = switch (RTI_sensor_preset) do {
-    case 1: {[1.0, 2.2, -0.30, 0.10, 0.6]};
-    case 2: {[1.0, 1.35, -0.08, 0.10, 0.4]};
-    case 3: {[0.95, 0.9, 0, 0.08, 0.25]};
-    case 4: {[1.0, 2.6, -0.45, 0.05, 0.45]};
-    default {[RTI_sensor_brightness, RTI_sensor_contrast, RTI_sensor_blackLevel, RTI_sensor_noise, RTI_sensor_blur]};
+    case 1: {[1.0, 2.2, -0.30, 0.10, 0.6, 0.10]};
+    case 2: {[1.0, 1.35, -0.08, 0.10, 0.4, 0.04]};
+    case 3: {[0.95, 0.9, 0, 0.08, 0.25, 0]};
+    case 4: {[1.0, 2.6, -0.45, 0.05, 0.45, 0.07]};
+    default {[RTI_sensor_brightness, RTI_sensor_contrast, RTI_sensor_blackLevel, RTI_sensor_noise, RTI_sensor_blur, RTI_sensor_floor]};
 };
 
-_base params ["_brightness", "_contrast", "_offset", "_noise", "_blur"];
+_base params ["_brightness", "_contrast", "_offset", "_noise", "_blur", "_floor"];
 
 if (RTI_env_enabled) then {
     private _env = missionNamespace getVariable ["RTI_env_k", [1, 1, 1, 0, 15]];
@@ -45,4 +45,10 @@ if (RTI_env_enabled) then {
     _noise = _noise * _noiseK;
 };
 
-[_brightness, _contrast, _offset, _noise, _blur]
+// Zemin tabanı: kontrast siyaha gömdükten SONRA, ayrı bir katmanla siyahı biraz kaldırır; çimen ve toprak eşit koyu griye
+// oturur (çimen kaybolur, toprak simsiyah olmaz). Bakılan yüzeye (RTI_fnc_surfaceUpdate) ve bakış yönüne
+// (gökyüzü siyah kalsın) göre ölçeklenir.
+private _surf = missionNamespace getVariable ["RTI_surf_k", [1, 1, "", ""]];
+_floor = (((_floor * (_surf select 0)) * (_surf select 1)) max 0) min 0.3;
+
+[_brightness, _contrast, _offset, _noise, _blur, _floor]

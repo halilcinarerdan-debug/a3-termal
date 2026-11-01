@@ -93,6 +93,26 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     _refresh
 ] call CBA_settings_fnc_init;
 
+[
+    "RTI_sensor_floor",
+    "SLIDER",
+    ["[Elle] Zemin tabanı", "Kontrast siyaha gömdükten sonra siyahı bu kadar kaldırır: çimen ve toprak eşit koyu griye oturur (çimen görünmez, toprak simsiyah olmaz). 0 = saf siyah. Gökyüzü (yukarı bakış) siyah kalır. Yalnızca Elle iken."],
+    _category,
+    [0, 0.3, 0.10, 2],
+    false,
+    _refresh
+] call CBA_settings_fnc_init;
+
+[
+    "RTI_sensor_surface",
+    "CHECKBOX",
+    ["Zemin tabanı yüzeye göre değişsin (deneysel)", "Kameranın baktığı yüzeyin sınıfına (CfgSurfaces: asfalt, kaya, kum, kar, su, toprak, çimen) ve gün saatine göre taban ayarlanır: asfalt ve kaya ısıyı tutar, kum geceleri soğur, kar soğuktur. Yüzeyi boyamaz; ekranın tabanını sahneye uydurur (AGC gibi). Termal açıkken 1.5 sn'de bir bakılan yüzeye bakar."],
+    _category,
+    true,
+    false,
+    _refresh
+] call CBA_settings_fnc_init;
+
 // Flaşın hangi yönde (parlak/koyu) çizileceği paletin kutbuna bağlı. Oyun FLIR indeksini
 // bildiriyor (currentVisionMode [birim], 2.08+); "Otomatik" bunu kullanır. İndeks -> kutup
 // eşlemesi setCamUseTI sayfasından doğrulanmadığı için varsayılan elle seçimdir.

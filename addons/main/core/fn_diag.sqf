@@ -17,7 +17,7 @@ private _log = {
 };
 
 format [
-    "surum 0.3.2 | CBA=%1 | rti_main=%2",
+    "surum 0.4.0 | CBA=%1 | rti_main=%2",
     isClass (configFile >> "CfgPatches" >> "cba_main"),
     isClass (configFile >> "CfgPatches" >> "rti_main")
 ] call _log;
@@ -69,10 +69,18 @@ if (isClass _modes) then {
 
 // Ortam modeli ve sensör değerleri
 format [
-    "ortam [kontrastK, bulaniklikK, gurultuK, gunes, sicaklikC]=%1 | sensor [parlaklik, kontrast, ofset, gurultu, bulaniklik]=%2 | hazir ayar=%3",
+    "ortam [kontrastK, bulaniklikK, gurultuK, gunes, sicaklikC]=%1 | sensor [parlaklik, kontrast, ofset, gurultu, bulaniklik, taban]=%2 | hazir ayar=%3",
     missionNamespace getVariable ["RTI_env_k", "?"],
     if (missionNamespace getVariable ["RTI_env_enabled", false]) then {call RTI_fnc_sensorParams} else {"ortam kapali"},
     missionNamespace getVariable ["RTI_sensor_preset", "?"]
+] call _log;
+
+// Zemin tabanı: bakılan yüzey
+format [
+    "yuzey [zeminK, gokK, grup, sinif]=%1 | sensor ayar: yuzeye gore taban=%2 taban surgusu=%3",
+    missionNamespace getVariable ["RTI_surf_k", "?"],
+    missionNamespace getVariable ["RTI_sensor_surface", "?"],
+    missionNamespace getVariable ["RTI_sensor_floor", "?"]
 ] call _log;
 
 // Optik taraması

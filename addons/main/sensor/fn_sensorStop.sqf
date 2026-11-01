@@ -2,7 +2,7 @@
     Fonksiyon: RTI_fnc_sensorStop
     Çalışma yeri: İstemci
 
-    Sensör ekran efektlerini ve flaş efektini kapatıp yok eder; ortam PFH'sini durdurur;
+    Sensör ekran efektlerini ve flaş efektini kapatıp yok eder; ortam ve yüzey PFH'lerini durdurur;
     arazi ızgarasını değiştirdiysek geri yükler. Etkin değilse zararsızdır.
 
     Parametreler: yok
@@ -19,14 +19,19 @@ missionNamespace setVariable ["RTI_sensor_active", false];
         ppEffectDestroy _handle;
         missionNamespace setVariable [_x, -1];
     };
-} forEach ["RTI_pp_color", "RTI_pp_grain", "RTI_pp_blur"];
+} forEach ["RTI_pp_color", "RTI_pp_floor", "RTI_pp_grain", "RTI_pp_blur"];
 
-private _pfh = missionNamespace getVariable ["RTI_env_pfh", -1];
+{
+    private _pfh = missionNamespace getVariable [_x, -1];
 
-if (_pfh >= 0) then {
-    [_pfh] call CBA_fnc_removePerFrameHandler;
-    RTI_env_pfh = -1;
-};
+    if (_pfh >= 0) then {
+        [_pfh] call CBA_fnc_removePerFrameHandler;
+        missionNamespace setVariable [_x, -1];
+    };
+} forEach ["RTI_env_pfh", "RTI_surf_pfh"];
+
+// Bir sonraki termal girişte eski yüzey değeri kalmasın.
+RTI_surf_k = [1, 1, "", ""];
 
 if (missionNamespace getVariable ["RTI_grass_changed", false]) then {
     RTI_grass_changed = false;
