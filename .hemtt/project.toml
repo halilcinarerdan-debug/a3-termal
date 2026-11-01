@@ -1,0 +1,13 @@
+name = "RTI - Gercekci Termal"
+prefix = "rti"
+mainprefix = "z"
+author = "RTI"
+
+[version]
+major = 0
+minor = 1
+patch = 0
+git_hash = 0
+
+[files]
+include = ["mod.cpp"]
