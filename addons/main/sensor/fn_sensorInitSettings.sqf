@@ -86,9 +86,9 @@ private _refresh = {call RTI_fnc_sensorRefresh};
 [
     "RTI_sensor_blur",
     "SLIDER",
-    ["[Elle] Bulanıklık (MTF)", "Optik/sensör çözünürlük kaybı: keskin kenarları ve ince çimen desenini yumuşatır. 0 = yok. Çok yükseltirsen uzaktaki hedefler de silinir. Yalnızca Elle iken."],
+    ["[Elle] Bulanıklık (MTF)", "UYARI: DynamicBlur efekti oyunda ekranı KARARTIYOR (gözlem). Varsayılan 0 = kapalı. Yalnızca Elle iken ve 'Katman: bulanıklık' açıkken çalışır; çok küçük değerlerle (0.01-0.05) dene."],
     _category,
-    [0, 5, 0.4, 2],
+    [0, 5, 0, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;

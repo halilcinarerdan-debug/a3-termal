@@ -51,6 +51,12 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a000. Bulanıklık ekranı karartıyor (0.4.6)
+
+Ölçüm: renk/kontrast katmanı Nötr'de karartmıyor; **bulanıklık (DynamicBlur) katmanı açılınca ekran kararıyor**. 0.4.6'da tüm hazır ayarlarda bulanıklık 0
+(efekt devre dışı), Elle'deki bulanıklık sürgüsü varsayılan 0. Gürültü (FilmGrain) katmanı **henüz tek başına ölçülmedi**: Nötr'de "Katman: gürültü"yü aç, karartıyor mu?
+Hazır ayarları (Dengeli, Agresif, Siyah) artık bulanıklıksız dene: kontrast / siyah seviyesi ekranı karartıyor mu, çimen sönüyor mu?
+
 ## 2a00. Güvenli başlangıç: tüm katmanlar KAPALI (0.4.5)
 
 0.4.5'te dört PP katmanı (renk/kontrast, zemin tabanı, gürültü, bulanıklık) **varsayılan KAPALI** ve "PP'yi termal/NVG'de zorla" KAPALI:
