@@ -128,9 +128,9 @@ private _refresh = {call RTI_fnc_sensorRefresh};
 [
     "RTI_sensor_layerColor",
     "CHECKBOX",
-    ["Katman: renk / kontrast (ColorCorrections)", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    ["Katman: renk / kontrast (ColorCorrections)", "VARSAYILAN KAPALI (karartma hatası ayıklanırken güvenli başlangıç). Tek tek AÇARAK hangi katmanın ekranı karattığını bul."],
     _category,
-    true,
+    false,
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -138,9 +138,9 @@ private _refresh = {call RTI_fnc_sensorRefresh};
 [
     "RTI_sensor_layerFloor",
     "CHECKBOX",
-    ["Katman: zemin tabanı", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    ["Katman: zemin tabanı", "VARSAYILAN KAPALI (karartma hatası ayıklanırken güvenli başlangıç). Tek tek AÇARAK hangi katmanın ekranı karattığını bul."],
     _category,
-    true,
+    false,
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -148,9 +148,9 @@ private _refresh = {call RTI_fnc_sensorRefresh};
 [
     "RTI_sensor_layerGrain",
     "CHECKBOX",
-    ["Katman: gürültü (FilmGrain)", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    ["Katman: gürültü (FilmGrain)", "VARSAYILAN KAPALI (karartma hatası ayıklanırken güvenli başlangıç). Tek tek AÇARAK hangi katmanın ekranı karattığını bul."],
     _category,
-    true,
+    false,
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -158,9 +158,9 @@ private _refresh = {call RTI_fnc_sensorRefresh};
 [
     "RTI_sensor_layerBlur",
     "CHECKBOX",
-    ["Katman: bulanıklık (DynamicBlur)", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    ["Katman: bulanıklık (DynamicBlur)", "VARSAYILAN KAPALI (karartma hatası ayıklanırken güvenli başlangıç). Tek tek AÇARAK hangi katmanın ekranı karattığını bul."],
     _category,
-    true,
+    false,
     false,
     _refresh
 ] call CBA_settings_fnc_init;

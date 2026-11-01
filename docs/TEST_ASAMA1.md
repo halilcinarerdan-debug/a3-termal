@@ -51,6 +51,15 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a00. Güvenli başlangıç: tüm katmanlar KAPALI (0.4.5)
+
+0.4.5'te dört PP katmanı (renk/kontrast, zemin tabanı, gürültü, bulanıklık) **varsayılan KAPALI** ve "PP'yi termal/NVG'de zorla" KAPALI:
+yeni kurulumda görüntü vanilla'dır. Karartmayı bulmak için Addon Options → RTI → Sensör altında sırayla:
+1. Hazır ayar = Nötr. Hepsi kapalıyken görüntü normal olmalı (değilse sorun PP'de değil, başka bir yerde: RPT'yi gönder).
+2. Sırayla **tek bir** katmanı aç, termale bak, kapat: "Katman: bulanıklık", "Katman: gürültü", "Katman: renk / kontrast", "Katman: zemin tabanı".
+3. Hangi katmanı açınca ekran karardı? Yaz. (Menüde "Katman:" kutuları yoksa yüklü PBO eski: 0.4.5'i paketle.)
+Hiçbir katman açıkken efekt görünmüyorsa "PP'yi termal/NVG'de zorla"yı aç ve yukarıdaki adımları tekrarla.
+
 ## 2a0. Nötr ayarda bile ekran SİMSİYAH (0.4.4)
 
 Nötr hazır ayarda kontrast / ofset / parlaklık hiç değişmez; yine de kararıyorsa sebep başka bir PP katmanı ya da `ppEffectForceInNVG`'dir.

@@ -66,10 +66,10 @@ private _forceNVG = missionNamespace getVariable ["RTI_sensor_forceNVG", false];
     if (_x >= 0) then {_x ppEffectForceInNVG _forceNVG};
 } forEach [_color, _floorH, _grain, _blur];
 
-private _layerColor = missionNamespace getVariable ["RTI_sensor_layerColor", true];
-private _layerFloor = missionNamespace getVariable ["RTI_sensor_layerFloor", true];
-private _layerGrain = missionNamespace getVariable ["RTI_sensor_layerGrain", true];
-private _layerBlur = missionNamespace getVariable ["RTI_sensor_layerBlur", true];
+private _layerColor = missionNamespace getVariable ["RTI_sensor_layerColor", false];
+private _layerFloor = missionNamespace getVariable ["RTI_sensor_layerFloor", false];
+private _layerGrain = missionNamespace getVariable ["RTI_sensor_layerGrain", false];
+private _layerBlur = missionNamespace getVariable ["RTI_sensor_layerBlur", false];
 
 private _params = call RTI_fnc_sensorParams;
 _params params ["_brightness", "_contrast", "_offset", "_noise", "_blurAmount", "_floorLevel"];
