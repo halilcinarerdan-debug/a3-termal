@@ -48,7 +48,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "SLIDER",
     ["[Elle] Parlaklık", "1 = değişiklik yok. Yalnızca Hazır ayar = Elle iken kullanılır."],
     _category,
-    [0.3, 4, 1.0, 2],
+    [0.05, 4, 1.0, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -58,7 +58,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "SLIDER",
     ["[Elle] Kontrast", "1 = değişiklik yok. Yüksek kontrast siyah-beyaz ayrımını sertleştirir; siyah seviyesiyle birlikte kullan. Yalnızca Elle iken."],
     _category,
-    [0.3, 4, 1.2, 2],
+    [0.05, 4, 1.0, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -68,7 +68,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "SLIDER",
     ["[Elle] Siyah seviyesi (ofset)", "Negatif değer görüntüyü karartır: orta gri zemin ve çimen yamaları siyaha yaklaşır, parlak hedefler beyazda kalır. Uzaktaki askerin zeminden ayrışması için en etkili sürgü. Yalnızca Elle iken."],
     _category,
-    [-1, 0.5, 0, 2],
+    [-1.5, 0.5, 0, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;

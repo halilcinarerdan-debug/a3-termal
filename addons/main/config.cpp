@@ -20,8 +20,8 @@ class CfgPatches
         requiredVersion = 2.08;
         requiredAddons[] = {"cba_main"};
         version = 0.4;
-        versionStr = "0.4.6";
-        versionAr[] = {0,4,6};
+        versionStr = "0.4.7";
+        versionAr[] = {0,4,7};
     };
 };
 

@@ -10,9 +10,11 @@
     Mod: tüm RTI efektleri geçici olarak durdurulur; yalnızca denenen parametre değişir; sonunda geri açılır.
 
     Modlar (her adım varsayılan 5 sn):
-        "offset"   : ColorCorrections ofset   0 -> -0.8        (siyah seviyesi)
+        "offset"   : ColorCorrections ofset   0 -> -1.0        (siyah seviyesi)
         "contrast" : ColorCorrections kontrast 1 -> 4
         "gain"     : ColorCorrections parlaklık çarpanı 1 -> 4
+        "gainlow"  : parlaklık çarpanı 1 -> 0.1   (parlak/uzak bölgeler tavanı aşıp bembeyaz oluyorsa: indirir)
+        "contrastlow": kontrast 1 -> 0.1          (aynı amaç)
         "blur"     : DynamicBlur 0 -> 3
         "grain"    : FilmGrain yoğunluğu 0 -> 0.8
 
@@ -29,7 +31,9 @@
 params [["_mode", "offset", [""]], ["_stepSeconds", 5, [0]]];
 
 private _steps = switch (_mode) do {
-    case "offset":   {[0, -0.05, -0.1, -0.2, -0.3, -0.45, -0.6, -0.8]};
+    case "offset":   {[0, -0.05, -0.1, -0.2, -0.3, -0.45, -0.6, -0.8, -1.0]};
+    case "gainlow":  {[1, 0.8, 0.6, 0.45, 0.3, 0.2, 0.1]};
+    case "contrastlow": {[1, 0.8, 0.6, 0.45, 0.3, 0.2, 0.1]};
     case "contrast": {[1, 1.2, 1.5, 2, 2.5, 3, 4]};
     case "gain":     {[1, 1.3, 1.6, 2, 3, 4]};
     case "blur":     {[0, 0.2, 0.5, 1, 2, 3]};
@@ -85,6 +89,8 @@ call RTI_fnc_sensorStop;
             case "offset":   {_handle ppEffectAdjust [1, 1, _value, [0, 0, 0, 0], [1, 1, 1, 0], _weights]};
             case "contrast": {_handle ppEffectAdjust [1, _value, 0, [0, 0, 0, 0], [1, 1, 1, 0], _weights]};
             case "gain":     {_handle ppEffectAdjust [_value, 1, 0, [0, 0, 0, 0], [1, 1, 1, 0], _weights]};
+            case "gainlow":  {_handle ppEffectAdjust [_value, 1, 0, [0, 0, 0, 0], [1, 1, 1, 0], _weights]};
+            case "contrastlow": {_handle ppEffectAdjust [1, _value, 0, [0, 0, 0, 0], [1, 1, 1, 0], _weights]};
             case "blur":     {_handle ppEffectAdjust [_value]};
             case "grain":    {_handle ppEffectAdjust [_value, 1.5, 2.5, 1, 1, true]};
         };

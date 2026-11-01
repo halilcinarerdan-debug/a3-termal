@@ -51,6 +51,13 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a0000. Uzak bölgeler / ağaçlar bembeyaz (0.4.7)
+
+Gözlem: tüm hazır ayarlarda (Dengeli, Agresif, Siyah) uzaktaki zemin ve ağaçlar bembeyaz kalıyor. Bu, o piksellerin değerinin tavanın (1.0) çok üstünde
+olduğunu düşündürür; kontrast yükseltmek onları parlatır, küçük ofset indirmez. 1'in ALTINI ölçen yeni ladder modları (aynı kadrajda, vanilla termal açıkken):
+`["gainlow"] call RTI_fnc_ppLadder;`  ve  `["contrastlow"] call RTI_fnc_ppLadder;`  (her biri 1 -> 0.1, 7 adım). Hangi adımda uzaktaki beyaz gri/detaylı hale geliyor
+ve hangi adımda yakın hedef (tank/asker) bozuluyor? Slider aralıkları da genişledi (parlaklık/kontrast 0.05-4, siyah seviyesi -1.5..0.5).
+
 ## 2a000. Bulanıklık ekranı karartıyor (0.4.6)
 
 Ölçüm: renk/kontrast katmanı Nötr'de karartmıyor; **bulanıklık (DynamicBlur) katmanı açılınca ekran kararıyor**. 0.4.6'da tüm hazır ayarlarda bulanıklık 0
