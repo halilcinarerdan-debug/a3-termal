@@ -29,7 +29,7 @@ private _create = {
     // PP efektleri gece görüşü (NVG/termal) açıkken varsayılan olarak çizilmeyebilir;
     // ppEffectForceInNVG bunu zorlar (BI wiki ppEffectAdjust "See also"). Termalde gerekli olup
     // olmadığı oyunda doğrulanmadı; zararsızdır çünkü efektler yalnızca termalde yaşar.
-    if (_handle >= 0) then {_handle ppEffectForceInNVG true};
+    if (_handle >= 0) then {_handle ppEffectForceInNVG (missionNamespace getVariable ["RTI_sensor_forceNVG", false])};
 
     _handle
 };
@@ -59,6 +59,18 @@ if ((_color < 0 || {_floorH < 0} || {_grain < 0} || {_blur < 0}) && {!(missionNa
     systemChat "[RTI] Uyari: PP efekti olusturulamadi (Video ayarinda Post Process kapali olabilir). RPT: [RTI][SENSOR]";
 };
 
+// ForceInNVG ve katman anahtarları (menüden): karartma hatasını ayırt etmek için her katman ayrı kapatılabilir.
+private _forceNVG = missionNamespace getVariable ["RTI_sensor_forceNVG", false];
+
+{
+    if (_x >= 0) then {_x ppEffectForceInNVG _forceNVG};
+} forEach [_color, _floorH, _grain, _blur];
+
+private _layerColor = missionNamespace getVariable ["RTI_sensor_layerColor", true];
+private _layerFloor = missionNamespace getVariable ["RTI_sensor_layerFloor", true];
+private _layerGrain = missionNamespace getVariable ["RTI_sensor_layerGrain", true];
+private _layerBlur = missionNamespace getVariable ["RTI_sensor_layerBlur", true];
+
 private _params = call RTI_fnc_sensorParams;
 _params params ["_brightness", "_contrast", "_offset", "_noise", "_blurAmount", "_floorLevel"];
 
@@ -67,7 +79,7 @@ private _commit = missionNamespace getVariable ["RTI_sensor_commit", 0.15];
 
 // [parlaklık, kontrast, ofset (siyah seviyesi), karışım rengi, renklendirme, kanal ağırlıkları]
 if (_color >= 0) then {
-    _color ppEffectEnable true;
+    _color ppEffectEnable _layerColor;
     _color ppEffectAdjust [_brightness, _contrast, _offset, [0, 0, 0, 0], [1, 1, 1, 0], [0.299, 0.587, 0.114, 0]];
     _color ppEffectCommit _commit;
 };
@@ -77,20 +89,20 @@ if (_color >= 0) then {
 if (_floorH >= 0) then {
     private _alpha = (2 * _floorLevel) min 0.6;
 
-    _floorH ppEffectEnable (_alpha > 0);
+    _floorH ppEffectEnable (_alpha > 0 && {_layerFloor});
     _floorH ppEffectAdjust [1, 1, 0, [0.5, 0.5, 0.5, _alpha], [1, 1, 1, 0], [0.299, 0.587, 0.114, 0]];
     _floorH ppEffectCommit _commit;
 };
 
 // [yoğunluk, keskinlik, tane boyutu, parlaklık etkisi 0, parlaklık etkisi 1, tek renk]
 if (_grain >= 0) then {
-    _grain ppEffectEnable (_noise > 0);
+    _grain ppEffectEnable (_noise > 0 && {_layerGrain});
     _grain ppEffectAdjust [_noise, 1.5, 2.5, 1, 1, true];
     _grain ppEffectCommit _commit;
 };
 
 if (_blur >= 0) then {
-    _blur ppEffectEnable (_blurAmount > 0);
+    _blur ppEffectEnable (_blurAmount > 0 && {_layerBlur});
     _blur ppEffectAdjust [_blurAmount];
     _blur ppEffectCommit _commit;
 };

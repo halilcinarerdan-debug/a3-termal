@@ -28,7 +28,7 @@ if (_handle < 0) then {
     };
 
     // Termal / NVG açıkken de çizilsin (bkz. sensorRefresh).
-    if (_handle >= 0) then {_handle ppEffectForceInNVG true};
+    if (_handle >= 0) then {_handle ppEffectForceInNVG (missionNamespace getVariable ["RTI_sensor_forceNVG", false])};
 
     missionNamespace setVariable ["RTI_pp_flash", _handle];
 };

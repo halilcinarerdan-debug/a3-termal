@@ -51,6 +51,16 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a0. Nötr ayarda bile ekran SİMSİYAH (0.4.4)
+
+Nötr hazır ayarda kontrast / ofset / parlaklık hiç değişmez; yine de kararıyorsa sebep başka bir PP katmanı ya da `ppEffectForceInNVG`'dir.
+0.4.4'te `ppEffectForceInNVG` artık **varsayılan KAPALI** (ayar: "PP'yi termal/NVG'de zorla"). Önce bununla dene; efekt hiç görünmüyorsa aç.
+
+Ayrıştırma (termal görüntüye bakarken, debug konsolu): `call RTI_fnc_ppBisect;`
+Her PP efektini tek başına, nötr değerle, ForceInNVG AÇIK ve KAPALI olarak 5 sn dener (adım 0: efekt yok). Sohbete `BISECT ADIM n/6: ...`
+yazar. **Hangi adımlar ekranı karartıyor, hangileri normal?** (ör. "3 ve 4 karartıyor, diğerleri normal" -> FilmGrain suçlu).
+Menüden de aynısı: Addon Options → RTI → Sensör → "Katman: ..." kutuları (renk, zemin tabanı, gürültü, bulanıklık) tek tek kapatılabilir.
+
 ## 2a. KALİBRASYON: ekran tamamen kararıyorsa (0.4.2)
 
 Gözlem: Agresif (kontrast 2.2, ofset -0.30) Zeus'ta ekranı **tamamen karartıyor**. Bu iki şeyi söyler: (1) post-process termal görüntünün

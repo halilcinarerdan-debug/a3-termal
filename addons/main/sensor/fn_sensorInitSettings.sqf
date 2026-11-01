@@ -113,6 +113,58 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     _refresh
 ] call CBA_settings_fnc_init;
 
+// Karartma hatası ayıklama: ForceInNVG ve katmanlar. Nötr ayarda bile ekran kararıyorsa tek tek kapatıp hangisinin sebep olduğuna bak
+// (ya da debug konsolunda call RTI_fnc_ppBisect;).
+[
+    "RTI_sensor_forceNVG",
+    "CHECKBOX",
+    ["PP'yi termal/NVG'de zorla (ppEffectForceInNVG)", "BI wiki'ye göre PP efektleri gece görüşünde varsayılan çizilmeyebilir; bu seçenek zorlar. Ekran SİMSİYAH oluyorsa KAPAT. Kapalıyken efekt hiç görünmüyorsa AÇ."],
+    _category,
+    false,
+    false,
+    _refresh
+] call CBA_settings_fnc_init;
+
+[
+    "RTI_sensor_layerColor",
+    "CHECKBOX",
+    ["Katman: renk / kontrast (ColorCorrections)", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    _category,
+    true,
+    false,
+    _refresh
+] call CBA_settings_fnc_init;
+
+[
+    "RTI_sensor_layerFloor",
+    "CHECKBOX",
+    ["Katman: zemin tabanı", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    _category,
+    true,
+    false,
+    _refresh
+] call CBA_settings_fnc_init;
+
+[
+    "RTI_sensor_layerGrain",
+    "CHECKBOX",
+    ["Katman: gürültü (FilmGrain)", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    _category,
+    true,
+    false,
+    _refresh
+] call CBA_settings_fnc_init;
+
+[
+    "RTI_sensor_layerBlur",
+    "CHECKBOX",
+    ["Katman: bulanıklık (DynamicBlur)", "Karartma hatası ayıklama için tek tek kapatılabilir."],
+    _category,
+    true,
+    false,
+    _refresh
+] call CBA_settings_fnc_init;
+
 // Flaşın hangi yönde (parlak/koyu) çizileceği paletin kutbuna bağlı. Oyun FLIR indeksini
 // bildiriyor (currentVisionMode [birim], 2.08+); "Otomatik" bunu kullanır. İndeks -> kutup
 // eşlemesi setCamUseTI sayfasından doğrulanmadığı için varsayılan elle seçimdir.

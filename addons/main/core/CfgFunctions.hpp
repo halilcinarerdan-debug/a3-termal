@@ -26,4 +26,7 @@ class core
 
     // Kalibrasyon merdiveni: bir PP parametresini adim adim degistirip sohbete yazar: ["offset"] call RTI_fnc_ppLadder;
     class ppLadder {};
+
+    // Notr ayarda bile ekran kararirsa: her PP efektini tek basina ve ForceInNVG acik/kapali dener: call RTI_fnc_ppBisect;
+    class ppBisect {};
 };
