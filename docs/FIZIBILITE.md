@@ -15,6 +15,9 @@ Oyun içi ekran görüntülerinden (Zeus kamerası) çıkanlar:
   (yine orta gri) uzaktan zeminden ayrışmıyor; (c) araç gövdesi tek tip beyaz.
 - Önceki sürümlerdeki varsayılan "kontrast 0.85, parlaklık 0.95" siyah-beyaz farkını **sıkıştırıyordu** (beyaza patlama
   varsayımıyla yazılmıştı; yanlıştı). 0.3.0'da varsayılan **Agresif**: kontrast ↑, siyah seviyesi (ofset) ↓, bulanıklık ↑.
+- Yukarıdan bakınca çimen, çapraz iki levhadan oluşan "X" öbekleri olarak **orta gri** (~0.47) çizilir, aralarındaki zemin siyah,
+  tank ~0.85. Çimeni siyaha gömmek bir **eşik** işidir: yaklaşık kontrast 2.4-2.6 ve siyah seviyesi -0.43...-0.45 ("Siyah"
+  hazır ayarı); bedeli, zemine yakın gri tonların (insan giysisi) de koyulaşmasıdır.
 - Çimen yamaları araziye çizilen clutter'dır; sınıf adına bağlı termal ayarı yok. Ton ayarı + bulanıklık yamaları siler;
   gerçek kaldırma arazi ızgarasıdır (Video "Arazi ayrıntısı").
 - Hava / mevsim: `env/` modülü hesaplar (hava sıcaklığı, güneş, bulutluluk, sis, yağmur). Nesne bazında kontrast yalnızca

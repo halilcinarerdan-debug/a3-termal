@@ -17,7 +17,7 @@ private _log = {
 };
 
 format [
-    "surum 0.3.1 | CBA=%1 | rti_main=%2",
+    "surum 0.3.2 | CBA=%1 | rti_main=%2",
     isClass (configFile >> "CfgPatches" >> "cba_main"),
     isClass (configFile >> "CfgPatches" >> "rti_main")
 ] call _log;

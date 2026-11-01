@@ -36,9 +36,9 @@ private _refresh = {call RTI_fnc_sensorRefresh};
 [
     "RTI_sensor_preset",
     "LIST",
-    ["Hazır ayar", "Agresif: sert siyah-beyaz ayrımı, zemin ve çimen yamaları siyaha çekilir, sıcak hedefler beyazda kalır, belirgin bulanıklık. Dengeli: ılımlı. Yumuşak: vanilla'ya yakın, patlamayı kırar. Elle: aşağıdaki sürgüler kullanılır."],
+    ["Hazır ayar", "Agresif: sert siyah-beyaz, zemin siyaha yakın, çimen koyu gri, belirgin bulanıklık. Siyah: çimeni ve zayıf ısıları siyaha gömer (sert eşik); insan giysisi de koyulaşır, yalnızca yüz/el gibi sıcak yerler parlak kalır. Dengeli: ılımlı. Yumuşak: vanilla'ya yakın. Elle: aşağıdaki sürgüler kullanılır."],
     _category,
-    [[0, 1, 2, 3], ["Elle (aşağıdaki sürgüler)", "Agresif (sert siyah-beyaz, bulanık)", "Dengeli", "Yumuşak"], 1],
+    [[0, 1, 2, 3, 4], ["Elle (aşağıdaki sürgüler)", "Agresif (sert siyah-beyaz, bulanık)", "Dengeli", "Yumuşak", "Siyah (çimeni sil, sert eşik)"], 1],
     false,
     _refresh
 ] call CBA_settings_fnc_init;

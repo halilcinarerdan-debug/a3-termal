@@ -63,7 +63,11 @@ Termal görüntüdeyken debug konsolunda:
 
 1. **Hazır ayar karşılaştırması:** Addon Options → Sensör → "Hazır ayar" = Agresif / Dengeli / Yumuşak. Agresif'te:
    zemin ve çimen yamaları **siyaha yakın**, sıcak cisimler beyaz, görüntü belirgin yumuşak olmalı. Uzaktaki asker zeminden
-   ayrışıyor mu? **Siyah-beyaz farkı hâlâ az ise**: Hazır ayar = Elle, kontrast 2.2-2.8, siyah seviyesi -0.3...-0.4 dene
+   ayrışıyor mu? **Çimen hâlâ görünüyorsa** Hazır ayar = **Siyah (çimeni sil)** dene (kontrast 2.6, siyah seviyesi -0.45):
+   çimen siyaha gömülür ama insan giysisi de koyulaşır, yalnızca yüz/el parlak kalır; hangi uzlaşma sana uyuyor bana yaz.
+   Çimen yine görünüyorsa önce **Zeus'ta `[true] call RTI_fnc_sensorForce;`** açık mı kontrol et (açık değilse görüntü
+   vanilladır), sonra "Ortam etkisi şiddeti"ni 0 yap (gündüz/sıcakta ortam modeli kontrastı düşürür).
+   **Siyah-beyaz farkı hâlâ az ise**: Hazır ayar = Elle, kontrast 2.2-2.8, siyah seviyesi -0.3...-0.4 dene
    ve değerleri bana yaz.
 2. **Ortam modeli:** "Hava sıcaklığını elle ver" aç; 35 °C ile -5 °C arasında değiştir. Sıcakta kontrast belirgin
    düşmeli (nesneler zeminle eşitlenir), soğukta artmalı. `call RTI_fnc_diag` satırında `ortam [...]` değerlerini gör.

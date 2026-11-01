@@ -83,7 +83,7 @@ belgelenemeyen komutlar doğrudan yazılmaz (`supportInfo` ile tespit edilip `co
 
 | Kategori | Öne çıkanlar |
 |----------|--------------|
-| Sensör | aktif, **hazır ayar (Agresif / Dengeli / Yumuşak / Elle)**, [elle] parlaklık / kontrast / **siyah seviyesi** / gürültü / bulanıklık, palet kutbu, hariç optikler, termalde çimeni kapat (deneysel) |
+| Sensör | aktif, **hazır ayar (Agresif / Siyah / Dengeli / Yumuşak / Elle)**, [elle] parlaklık / kontrast / **siyah seviyesi** / gürültü / bulanıklık, palet kutbu, hariç optikler, termalde çimeni kapat (deneysel) |
 | Ortam (hava / mevsim) | aktif, etki şiddeti, elle hava sıcaklığı (test), yarıküre, araç güneş yüklemesi |
 | Namlu flaşı | aktif, kendi ekran flaşı (+şiddet, sönme), başkalarının flaşı (deneysel), azami mesafe |
 | Araç ısı modeli | aktif, soğuma çarpanı, namlu ısınma çarpanı, güncelleme mesafesi, **TI parametre sırası** |
