@@ -51,6 +51,17 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a00000. "AC-130 / gözetleme kamerası" görünümü (0.4.8)
+
+Hedef (iki referans: gözetleme uçağı kamerası): zemin, ağaç, duvar **dar bir orta-gri bantta, düşük kontrastla ve ince dokuyla**; yalnızca ısı kaynakları
+(araç motoru, patlama) beyaza vurur. Bu, sert siyah-beyaz değil, sahnenin **sıkıştırılması**dır.
+
+Hazır ayar = **Gözetleme** (başlangıç tahmini: parlaklık 0.6, kontrast 0.55). Ayarla (Hazır ayar = Elle, aynı iki sürgü):
+- **Uzaktaki zemin/ağaç hâlâ beyazsa:** Parlaklığı düşür (0.6 -> 0.45 -> 0.3).
+- **Görüntü çok karanlıksa:** Parlaklığı yükselt (0.6 -> 0.8). Çok soluk / silikse kontrastı daha da düşür (0.55 -> 0.4).
+- **Araç beyaz kalıyor mu?** Motor çalışırken (araç ısı modeli) ve hareketteyken araç beyaza yakın olmalı; kalıyorsa ayar iyidir.
+Bulduğun parlaklık ve kontrast değerlerini yaz; hazır ayara sabit yazarım.
+
 ## 2a0000. Uzak bölgeler / ağaçlar bembeyaz (0.4.7)
 
 Gözlem: tüm hazır ayarlarda (Dengeli, Agresif, Siyah) uzaktaki zemin ve ağaçlar bembeyaz kalıyor. Bu, o piksellerin değerinin tavanın (1.0) çok üstünde

@@ -35,6 +35,10 @@ private _base = switch (_preset) do {
     // bulaniklik 0 (deger 0 ise efekt devre disi kalir). Bulaniklik yalnizca Elle'de ve acikca verilen degerle kullanilir.
     // 5 Notr: parlaklik/kontrast/ofset OLDUGU GIBI (vanilla ile ayni ton), yalnizca hafif bulaniklik ve gurultu. Karartmaz.
     case 5: {[1.0, 1.0, 0, 0.06, 0, 0]};
+    // 6 Gozetleme (AC-130 / uav gozetleme kamerasi gorunumu): sahne DAR BIR GRI BANTA sikisir (dusuk kontrast + dusuk parlaklik carpani),
+    // yalniz isi kaynaklari (arac, patlama) tavana vurup beyazlar. BASLANGIC TAHMINI: gozlem (kontrast < 1 aydinlatir, parlaklik < 1 uzak beyazi indirir).
+    // Cok karanlikssa parlakligi artir; cok soluk/silikse kontrasti daha da dusur.
+    case 6: {[0.6, 0.55, 0, 0.05, 0, 0]};
     default {[
         missionNamespace getVariable ["RTI_sensor_brightness", 1.0],
         missionNamespace getVariable ["RTI_sensor_contrast", 1.7],
