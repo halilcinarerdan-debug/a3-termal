@@ -17,4 +17,7 @@ class core
 
     // Cimen clutter siniflarini ve yakin arazi nesnelerini listeler (cimen yamalarinin kaynagi)
     class exportClutter {};
+
+    // Bir sinifin (silah / birim / arac) hangi modda tanimli oldugunu gosterir (termal ozellik kimden?)
+    class diagOwner {};
 };

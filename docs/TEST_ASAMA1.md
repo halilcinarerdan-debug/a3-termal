@@ -71,6 +71,25 @@ Termal görüntüdeyken debug konsolunda:
 3. **Çimen:** Agresif'te çimen yamaları yeterince sönüyor mu? Sönmüyorsa `call RTI_fnc_exportClutter` çıktısını gönder;
    gerekirse "Termalde çimeni kapat"ı dene (uyarı: ekran kısa süre takılabilir).
 
+## 2d. Karakter / silah ısısı kimden geliyor? (ayrıştırma testi)
+
+Bu modun kodu piyade vücut ısısına **ve** piyade silahı ısısına dokunmaz (yalnızca araçlara `setVehicleTIPars`
+uygular). Termalde görülen asker ve silah ısısı oyunun / sahip modun model dokusundan gelir (BI wiki: TI dokusunun alfa
+kanalı insanlarda metabolizma ısısı, silah/tank namlusunda namlu ısısıdır).
+
+1. **Sahibi bul:** silah elindeyken, bir askere bakarken `call RTI_fnc_diagOwner;` — raporda silah ve birim için
+   `tanimlayan mod` ve `model` yolu çıkar (`\A3\` vanilla, `\rhsusf\...` RHS, `\CUP\...` CUP). **Raporu (Ctrl+V) bana yapıştır.**
+2. **Silah ısınması hangi mekanizmadan?** Aynı sahnede, aynı atış sayısıyla sırayla dene ve her seferinde termalde
+   silahın ısınıp ısınmadığına bak:
+   - vanilla bir silah (ör. MX), **ACE overheating kapalı** (ACE ayarları → Overheating → kapat);
+   - aynı silah, **ACE overheating açık**;
+   - bir **CUP** silahı ve bir **RHS** silahı (ACE overheating kapalıyken).
+   Hangi kombinasyonda ısınıyorsa kaynak odur: vanilla motor / ACE / silah modeli. RTI'yi test için tamamen çıkarmak
+   en temiz yoldur; çıkarmadan da olur (RTI piyade silahına dokunmuyor), ama o durumda "Namlu flaşı → Kendi silahım"
+   kapalı olsun ki ekran parlaması karışmasın.
+3. **Ayrım ipucu:** ısınma ateşle birlikte kademeli artıp dakikalarca sönüyorsa bir ısıl simülasyondur (motor ya da
+   ACE); ateşin hemen ardından tüm ekranın ~0.15 sn parlaması ise bizim ekran flaşımızdır.
+
 ## 3. Kendi silahım için flaş
 
 Termal optikle birkaç tek atış, sonra otomatik atış.
