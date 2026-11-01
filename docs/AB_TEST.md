@@ -59,7 +59,7 @@ Varyantlar:
 - **A (vanilla):** RTI yüklü ama Addon Options'ta *Sensör efektleri*, *Namlu flaşı*, *Araç ısı modeli*, *Araç sıcak noktaları* **kapalı**
   (ya da mod hiç yüklü değil, daha temiz).
 - **B (RTI):** hepsi açık, varsayılan ayarlar. İkinci tur **B2**: sürgüler elle ayarlı (kontrast/parlaklık/gürültü), değerleri not et.
-- **Zeus kamerası ile çekiyorsan** RTI otomatik devreye girmez: B için `[true] call RTI_fnc_sensorForce;`, A için `[false] call RTI_fnc_sensorForce;`.
+- **Zeus kamerası ile çekiyorsan** RTI otomatik devreye girmez: B için **Shift + Ctrl + T** (ya da `[true] call RTI_fnc_sensorForce;`), A için tekrar Shift + Ctrl + T (ya da `[false] call RTI_fnc_sensorForce;`).
 - **Tekrarlanabilirlik:** Ortam modeli hava/saatle değişir. A/B çiftlerinde saat ve hava aynı olsun; ya da "Hava sıcaklığını elle ver" ile sıcaklığı sabitle ve dosya adına yaz (ör. `..._t15C_...`).
 
 HUD kapalı, aynı çözünürlük, ekran görüntüsünü oyunun kendi aracıyla al (Steam `F12` vb.).

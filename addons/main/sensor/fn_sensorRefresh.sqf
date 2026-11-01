@@ -52,6 +52,13 @@ private _floorH = missionNamespace getVariable ["RTI_pp_floor", -1];
 private _grain = missionNamespace getVariable ["RTI_pp_grain", -1];
 private _blur = missionNamespace getVariable ["RTI_pp_blur", -1];
 
+// Efekt oluşturulamadıysa (ppEffectCreate -1: Video'da Post Process kapalı ya da öncelikler dolu) bir kez uyar.
+if ((_color < 0 || {_floorH < 0} || {_grain < 0} || {_blur < 0}) && {!(missionNamespace getVariable ["RTI_pp_warned", false])}) then {
+    RTI_pp_warned = true;
+    diag_log format ["[RTI][SENSOR] PP efekti olusturulamadi | renk %1 taban %2 gurultu %3 bulaniklik %4 (-1 = basarisiz)", _color, _floorH, _grain, _blur];
+    systemChat "[RTI] Uyari: PP efekti olusturulamadi (Video ayarinda Post Process kapali olabilir). RPT: [RTI][SENSOR]";
+};
+
 private _params = call RTI_fnc_sensorParams;
 _params params ["_brightness", "_contrast", "_offset", "_noise", "_blurAmount", "_floorLevel"];
 

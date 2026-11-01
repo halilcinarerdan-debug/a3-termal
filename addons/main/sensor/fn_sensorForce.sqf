@@ -11,7 +11,8 @@
         [true] call RTI_fnc_sensorForce;      // B: RTI efektleri açık
         [false] call RTI_fnc_sensorForce;     // A: vanilla'ya dön
 
-    Zorlama açıkken görüş modu olayları efekti kapatmaz.
+    Zorlama açıkken görüş modu olayları efekti kapatmaz. Aynı işi CBA tuş ataması da yapar (varsayılan Shift + Ctrl + T,
+    RTI_fnc_sensorPostInit).
 
     Parametreler:
         0: BOOL - true aç, false kapat (varsayılan true)

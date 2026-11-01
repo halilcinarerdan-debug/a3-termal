@@ -17,9 +17,27 @@ private _log = {
 };
 
 format [
-    "surum 0.4.0 | CBA=%1 | rti_main=%2",
+    "surum (yuklu PBO, CfgPatches)=%1 | CBA=%2 | rti_main=%3",
+    getText (configFile >> "CfgPatches" >> "rti_main" >> "versionStr"),
     isClass (configFile >> "CfgPatches" >> "cba_main"),
     isClass (configFile >> "CfgPatches" >> "rti_main")
+] call _log;
+
+// Efekt gercekten uygulaniyor mu? (aktif bayragi, PP tutamaclari, hazir ayar, zorlama, gorus modu)
+private _ppNames = ["RTI_pp_color", "RTI_pp_floor", "RTI_pp_grain", "RTI_pp_blur"];
+private _ppHandles = _ppNames apply {missionNamespace getVariable [_x, -1]};
+private _ppEnabled = _ppHandles apply {if (_x >= 0) then {ppEffectEnabled _x} else {"yok"}};
+
+format [
+    "sensor durumu | ayar aktif=%1 | efekt calisiyor=%2 | zorla=%3 | ppAllowed=%4 | tutamac [renk,taban,gurultu,bulaniklik]=%5 | etkin=%6 | hazir ayar=%7 | gorus=%8",
+    missionNamespace getVariable ["RTI_sensor_enabled", "?"],
+    missionNamespace getVariable ["RTI_sensor_active", false],
+    missionNamespace getVariable ["RTI_sensor_forced", false],
+    missionNamespace getVariable ["RTI_ppAllowed", "?"],
+    _ppHandles,
+    _ppEnabled,
+    missionNamespace getVariable ["RTI_sensor_preset", "?"],
+    currentVisionMode [player]
 ] call _log;
 
 format [

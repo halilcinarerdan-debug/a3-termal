@@ -51,6 +51,23 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2b2. Efektler hiç değişmiyorsa (sırayla kontrol et)
+
+1. **Hangi sürüm yüklü?** `call RTI_fnc_diag;` ilk satır `surum (yuklu PBO, CfgPatches)=...` söyler. Komut yoksa / hata veriyorsa
+   yüklü PBO **eski**: Mikero ile yeniden paketle, eski `rti_main.pbo`'yu sil/üzerine yaz, oyunu tamamen kapatıp aç.
+2. **Zeus kullanıyorsan RTI KAPALIDIR.** Zeus'ta "N" ile açılan termal oyuncu biriminin görüş modunu değiştirmez; RTI görüş modunu
+   izlediği için efektler **hiç devreye girmez ve gördüğün görüntü vanilladır**. Zeus'ta termali "N" ile aç, sonra
+   **Shift + Ctrl + T** (CBA tuş ataması, "RTI - Gerçekçi Termal" altında değiştirilebilir) ile RTI efektlerini aç / kapat.
+   Tuş Zeus ekranında çalışmazsa konsol: `[true] call RTI_fnc_sensorForce;` / `[false] ...`. Gerçek oynanışta (asker, optik, araç
+   nişangahı) bunlar gerekmez; efektler termale girince kendiliğinden açılır.
+   **Efekt çalışıyor mu?** `call RTI_fnc_diag` raporundaki `sensor durumu` satırına bak: `efekt calisiyor=true` ve `tutamac` değerleri `>= 0` olmalı.
+3. **Post-process termalde çiziliyor mu?** Termal görüntüye bakarken `call RTI_fnc_ppTest;`. Ekran 3.5 sn **kırmızı**, sonra 3.5 sn **mavi**
+   boyanmalı. Yorum tablosu fonksiyonun başlığında; **kırmızı mı / mavi mi / hiçbiri mi** olduğunu bana yaz.
+4. **Video ayarı:** Ayarlar → Video → **Post Process Quality** "Disabled" olmasın. Kapalıysa script post-process efektleri çizilmez.
+   (RPT'de `[RTI][SENSOR] PP efekti olusturulamadi` satırı bunun işaretidir; ekranda da uyarı çıkar.)
+5. **CBA ayarı:** Addon Options → RTI → Sensör → "Sensör efektleri aktif" açık, "Hazır ayar" Agresif ya da Siyah olmalı.
+6. RPT'de (`%LOCALAPPDATA%\Arma 3\*.rpt`) `[RTI]` ya da `Error` satırı varsa gönder.
+
 ## 2c. Hazır ayarlar, siyah-beyaz farkı, ortam modeli ve Zeus
 
 **Zeus kamerasında test ediyorsan:** "N" ile açılan termal oyuncu birimini etkilemez; RTI otomatik devreye girmez.

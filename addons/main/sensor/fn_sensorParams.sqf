@@ -21,17 +21,27 @@
     Dönüş: ARRAY - [parlaklık, kontrast, ofset, gürültü, bulanıklık, zeminTabanı]
 */
 
-private _base = switch (RTI_sensor_preset) do {
+// Tüm okumalar varsayılanlı: tanımsız bir ayar değişkeni (ör. eski/yarım yüklenmiş ayarlar) hata verip efekti öldürmesin.
+private _preset = missionNamespace getVariable ["RTI_sensor_preset", 1];
+
+private _base = switch (_preset) do {
     case 1: {[1.0, 2.2, -0.30, 0.10, 0.6, 0.10]};
     case 2: {[1.0, 1.35, -0.08, 0.10, 0.4, 0.04]};
     case 3: {[0.95, 0.9, 0, 0.08, 0.25, 0]};
     case 4: {[1.0, 2.6, -0.45, 0.05, 0.45, 0.07]};
-    default {[RTI_sensor_brightness, RTI_sensor_contrast, RTI_sensor_blackLevel, RTI_sensor_noise, RTI_sensor_blur, RTI_sensor_floor]};
+    default {[
+        missionNamespace getVariable ["RTI_sensor_brightness", 1.0],
+        missionNamespace getVariable ["RTI_sensor_contrast", 1.7],
+        missionNamespace getVariable ["RTI_sensor_blackLevel", -0.12],
+        missionNamespace getVariable ["RTI_sensor_noise", 0.12],
+        missionNamespace getVariable ["RTI_sensor_blur", 0.6],
+        missionNamespace getVariable ["RTI_sensor_floor", 0.10]
+    ]};
 };
 
 _base params ["_brightness", "_contrast", "_offset", "_noise", "_blur", "_floor"];
 
-if (RTI_env_enabled) then {
+if (missionNamespace getVariable ["RTI_env_enabled", false]) then {
     private _env = missionNamespace getVariable ["RTI_env_k", [1, 1, 1, 0, 15]];
     _env params ["_contrastK", "_blurK", "_noiseK"];
 

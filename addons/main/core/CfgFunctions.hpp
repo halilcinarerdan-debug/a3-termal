@@ -20,4 +20,7 @@ class core
 
     // Bir sinifin (silah / birim / arac) hangi modda tanimli oldugunu gosterir (termal ozellik kimden?)
     class diagOwner {};
+
+    // Post-process termalde cizilir mi? Ekrani 7 sn boyar (kirmizi / mavi): call RTI_fnc_ppTest;
+    class ppTest {};
 };

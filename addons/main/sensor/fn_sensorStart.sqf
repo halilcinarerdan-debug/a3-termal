@@ -3,9 +3,13 @@
     Çalışma yeri: İstemci
 
     Termal efekt zincirini etkinleştirir. Zaten etkinse yalnızca ayarları yeniden uygular.
-      - Ortam modelini bir kez günceller ve 30 sn'lik bir PFH ile yeniler (yalnızca termal açıkken).
-      - Zemin tabanı için bakılan yüzeyi 1.5 sn'lik bir PFH ile izler (yalnızca termal açıkken).
-      - "Termalde çimeni kapat" açıksa arazi ızgarasını 50'ye (çimensiz) çeker; çıkışta geri yüklenir.
+
+    SIRA ÖNEMLİ: önce ekran efekti uygulanır (RTI_fnc_sensorRefresh). İsteğe bağlı parçalar (ortam modeli,
+    yüzey tabanı) ayrı betikte (spawn) ve PFH'lerde çalışır: SQF'te çalışma zamanı hatası o çağrı zincirini
+    sonlandırır, bu yüzden isteğe bağlı bir parçadaki hata ekran efektini asla engellememeli.
+      - Ortam modeli: başlangıçta bir kez + 30 sn'lik PFH (yalnızca termal açıkken).
+      - Zemin tabanı: bakılan yüzey / bakış yönü için 1.5 sn'lik PFH (yalnızca termal açıkken).
+      - "Termalde çimeni kapat" açıksa arazi ızgarasını 50'ye çeker; çıkışta geri yüklenir.
 
     Parametreler: yok
     Dönüş: yok
@@ -13,18 +17,23 @@
 
 missionNamespace setVariable ["RTI_sensor_active", true];
 
-// Ortam: başlangıçta bir kez zorla, sonra 30 sn'de bir (yalnızca termal açıkken çalışır).
-[true] call RTI_fnc_envUpdate;
+// 1) Ekran efekti ÖNCE (ortam / yüzey henüz hesaplanmadıysa tarafsız varsayılanlar kullanılır).
+call RTI_fnc_sensorRefresh;
 
+// 2) İsteğe bağlı başlangıç hesapları: ayrı betik, hata sensörü öldürmez; bitince efekti yeniler.
+[] spawn {
+    [true] call RTI_fnc_envUpdate;
+    call RTI_fnc_surfaceUpdate;
+    call RTI_fnc_sensorRefresh;
+};
+
+// 3) Periyodik yenileme (PFH kodu kendi betik örneğinde çalışır).
 if ((missionNamespace getVariable ["RTI_env_pfh", -1]) < 0) then {
     RTI_env_pfh = [{
         [] call RTI_fnc_envUpdate;
         call RTI_fnc_sensorRefresh;
     }, 30] call CBA_fnc_addPerFrameHandler;
 };
-
-// Zemin tabanı: bakılan yüzey ve bakış yönü (gökyüzü) 1.5 sn'de bir izlenir.
-call RTI_fnc_surfaceUpdate;
 
 if ((missionNamespace getVariable ["RTI_surf_pfh", -1]) < 0) then {
     RTI_surf_pfh = [{
@@ -33,9 +42,7 @@ if ((missionNamespace getVariable ["RTI_surf_pfh", -1]) < 0) then {
 };
 
 // Çimen (deneysel, kapalı gelir): çimen yamalarını kaldırmanın tek gerçek yolu arazi ızgarasıdır.
-if (RTI_sensor_grassOff && {!(missionNamespace getVariable ["RTI_grass_changed", false])}) then {
+if (missionNamespace getVariable ["RTI_sensor_grassOff", false] && {!(missionNamespace getVariable ["RTI_grass_changed", false])}) then {
     RTI_grass_changed = true;
     setTerrainGrid 50;
 };
-
-call RTI_fnc_sensorRefresh;

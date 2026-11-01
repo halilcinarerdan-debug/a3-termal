@@ -104,13 +104,14 @@ call RTI_fnc_testHeatSpot;              // termalde parçacık "sıcak nokta" g�
 [true] call RTI_fnc_spotDebug;          // normal görüşte: motor/egzoz/namlu noktalarını araç üstünde işaretle ([false] kapatır)
 call RTI_fnc_exportUniforms;            // üniformaları karakter modeline göre gruplar (anatomik ısı artık öncelikli değil)
 call RTI_fnc_exportClutter;             // çimen clutter sınıfları + yakın arazi nesneleri (çimen yamalarının kaynağı)
+call RTI_fnc_ppTest;                    // efektler hiç değişmiyorsa: ekranı 7 sn kırmızı/mavi boyar; post-process termalde çiziliyor mu?
 call RTI_fnc_diagOwner;                 // eldeki silah / baktığın birim hangi modda tanımlı? (termal özellik kimden: vanilla, RHS, CUP, ACE?)
 [true] call RTI_fnc_sensorForce;        // görüş moduna bakmadan RTI efektlerini aç (Zeus kamerası / A-B testi); [false] kapatır
 ```
 
 ## Bilinen sınırlar
 
-- **Zeus kamerası:** Zeus'ta "N" ile açılan termal oyuncu biriminin görüş modunu değiştirmez; RTI efektleri kendiliğinden devreye girmez. Zeus'ta test için `[true] call RTI_fnc_sensorForce;` kullan (görüntüleri A/B için bu yüzden aynı komutla karşılaştır).
+- **Zeus kamerası:** Zeus'ta "N" ile açılan termal oyuncu biriminin görüş modunu değiştirmez; RTI efektleri kendiliğinden devreye girmez. Zeus'ta test için **Shift + Ctrl + T** (CBA tuş ataması) ya da `[true] call RTI_fnc_sensorForce;` kullan (görüntüleri A/B için bu yüzden aynı komutla karşılaştır).
 - Render-target (PiP) mercekli optiklerde ana ekran normal görüntüdür; sensör efekti onu bozar. Böyle bir optik
   varsa sınıf adını "Efekt uygulanmayacak optikler" listesine yaz.
 - Araç ısı modeli yalnızca araçlara uygulanır; yaya silahlarının namlu ısısı için TI parametresi yok.
