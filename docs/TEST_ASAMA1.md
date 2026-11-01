@@ -112,6 +112,18 @@ Araç üstünde turuncu (motor/egzoz) ve kırmızı (namlu) işaretçiler ve "mo
 
 **Gönder:** ekran görüntüsü (termalde), kullandığın araç sınıfı, `[RTI][SPOT]` RPT satırı.
 
+## 5c. Üniforma modeli sayımı (anatomik ısı için ölçüm)
+
+RHS ve CUP yüklüyken debug konsolunda:
+
+```sqf
+call RTI_fnc_exportUniforms;
+```
+
+Sohbette "Uniforma raporu panoya kopyalandi" çıkar; **panodakini (Ctrl+V) bana yapıştır**. İlk satır özettir:
+kaç üniforma, kaç **farklı karakter modeli** (RHS / CUP / diğer ayrı). Anatomik ısı işinin boyutunu bu sayı belirler.
+Tam liste RPT'de `[RTI][UNI]` satırlarıdır.
+
 ## 6. Genel sağlık
 
 - RPT'de `[RTI]` ile başlayan **hata** satırı (`Error in expression`, `Undefined variable`) olmamalı. Varsa gönder.

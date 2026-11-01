@@ -72,6 +72,7 @@ call RTI_fnc_diag;                      // komut desteği, optik modları, araç
 call RTI_fnc_testHeatSpot;              // termalde parçacık "sıcak nokta" görünüyor mu?
 [] call RTI_fnc_diagTrace;              // bindiğin / baktığın aracın TI parametrelerini 120 sn boyunca RPT'ye yazar
 [true] call RTI_fnc_spotDebug;          // normal görüşte: motor/egzoz/namlu noktalarını araç üstünde işaretle ([false] kapatır)
+call RTI_fnc_exportUniforms;            // üniformaları karakter modeline göre gruplar: anatomik ısı için kaç model boyanacak?
 ```
 
 ## Bilinen sınırlar

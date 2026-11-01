@@ -59,6 +59,15 @@ askere sprite eklemek hem ağır hem dağınık görünür.
 
 ## 3. Gerçek anatomik / mekânsal ısı için gereken (v0.3+)
 
+**Kapsam kararı (anatomik ısı): yalnızca VÜCUT.** Yelek, kask, çanta gibi ekipman kapsam dışı. RHS'teki iri yelekler
+gövdeyi zaten örter ve kendi modelleri vardır; görünür ısı farkını belirleyen yüz, boyun, eller/ön kollar ve
+uzuvlardır. Bu iş yükünü ciddi biçimde küçültür: yelek/kask/çanta için ayrı doku gerekmez.
+
+Not: Arma'da "çıplak vücut" genelde ayrı bir varlık değildir. Vücut ve kıyafet çoğunlukla **aynı üniforma
+modelinin** parçasıdır (eller üniforma mesh'indedir), kafa ise ayrı bir modeldir (yüz dokusu). Yani vücut haritası
+**üniforma modeli başına** bir kez boyanır; kamuflaj çeşitleri aynı modeli paylaşıyorsa aynı haritayı paylaşır.
+Kaç farklı model olduğunu `call RTI_fnc_exportUniforms` söyler.
+
 RHS ve CUP modellerinin termal dokularını yeniden yazmak gerekir:
 
 1. Üniforma ve araç sınıfları için yeni bir rvmat + `*_ti_ca.paa` hazırlanır (kanal anlamları için BI

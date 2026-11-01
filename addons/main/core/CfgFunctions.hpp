@@ -11,4 +11,7 @@ class core
     class diag {};
     class diagTrace {};
     class testHeatSpot {};
+
+    // Uniformalari karakter modeline gore gruplar (anatomik isi isinin buyuklugunu olcer)
+    class exportUniforms {};
 };
