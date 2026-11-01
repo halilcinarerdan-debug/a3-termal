@@ -3,8 +3,10 @@
     Çalışma yeri: İstemci (debug konsolu)
 
     Bir aracın termal parametrelerini her saniye RPT'ye yazar ([RTI][TRACE]).
-    Amaç: setVehicleTIPars / getVehicleTIPars dizisindeki hangi sıranın motor, tekerlek
-    ve silah ısısı olduğunu gözlemle doğrulamak (motoru aç, sür, ateş et, durdur).
+    Amaç: motor / tekerlek / silah ısısının gerçekte nasıl davrandığını gözlemlemek (motoru aç, sür,
+    ateş et, durdur) ve modelimizin hesabıyla karşılaştırmak. BI wiki'ye göre setVehicleTIPars sırası
+    [motor+gövde, tekerlek/palet, ana silah]; getVehicleTIPars aynı üç değeri
+    [aliveFactor, movementFactor, metabolismFactor] adıyla döndürür.
 
     Parametreler:
         0: OBJECT - araç (varsayılan: bindiğin araç, yoksa imlecin gösterdiği)
@@ -40,7 +42,7 @@ systemChat format ["[RTI] %1 izleniyor: %2 sn (RPT: [RTI][TRACE])", typeOf _veh,
         };
 
         diag_log format [
-            "[RTI][TRACE] t=%1 | motor=%2 hiz=%3 atistanBeri=%4s | TIPars=%5 | RTI_eng=%6 RTI_whl=%7 RTI_wpn=%8",
+            "[RTI][TRACE] t=%1 | motor=%2 hiz=%3 atistanBeri=%4s | TIPars[alive,movement,metabolism]=%5 | RTI_eng=%6 RTI_whl=%7 RTI_wpn=%8",
             round (diag_tickTime - _t0),
             isEngineOn _veh,
             round (speed _veh),

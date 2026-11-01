@@ -26,6 +26,11 @@ private _create = {
         if (_handle >= 0) exitWith {};
     };
 
+    // PP efektleri gece görüşü (NVG/termal) açıkken varsayılan olarak çizilmeyebilir;
+    // ppEffectForceInNVG bunu zorlar (BI wiki ppEffectAdjust "See also"). Termalde gerekli olup
+    // olmadığı oyunda doğrulanmadı; zararsızdır çünkü efektler yalnızca termalde yaşar.
+    if (_handle >= 0) then {_handle ppEffectForceInNVG true};
+
     _handle
 };
 

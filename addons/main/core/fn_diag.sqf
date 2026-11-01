@@ -17,7 +17,7 @@ private _log = {
 };
 
 format [
-    "surum 0.2.0 | CBA=%1 | rti_main=%2",
+    "surum 0.2.2 | CBA=%1 | rti_main=%2",
     isClass (configFile >> "CfgPatches" >> "cba_main"),
     isClass (configFile >> "CfgPatches" >> "rti_main")
 ] call _log;
@@ -39,8 +39,8 @@ format ["ilgili komutlar (%1): %2", count _si, _si joinString " ; "] call _log;
 private _weapon = currentWeapon player;
 private _optic = (primaryWeaponItems player) param [2, ""];
 format [
-    "gorus modu=%1 (0 normal, 1 NVG, 2 TI) | silah=%2 | optik=%3 | kamera=%4",
-    currentVisionMode player,
+    "gorus [mod, flirIndeksi]=%1 (mod: 0 normal, 1 NVG, 2 TI) | silah=%2 | optik=%3 | kamera=%4",
+    currentVisionMode [player],
     _weapon,
     _optic,
     cameraView
@@ -71,11 +71,18 @@ if (isClass _modes) then {
 private _scan = missionNamespace getVariable ["RTI_thermalOptics", []];
 format ["taranan termal optik sayisi: %1 (ayrinti: RPT '[RTI][SCOPE]')", count _scan] call _log;
 
+// İnsan: getVehicleTIPars piyadede de değer döndürüyor mu? (wiki yalnızca "piyade SİLAHLARINDA çalışmaz" diyor)
+format [
+    "insan TI parametreleri | oyuncu=%1 | imlecteki=%2",
+    [player] call RTI_getTIPars,
+    if (cursorObject isKindOf "CAManBase") then {[cursorObject] call RTI_getTIPars} else {"imlec bir askerde degil"}
+] call _log;
+
 // Araç
-private _veh = if ((vehicle player) isNotEqualTo player) then {vehicle player} else {cursorObject};
+private _veh =if ((vehicle player) isNotEqualTo player) then {vehicle player} else {cursorObject};
 if (!isNull _veh && {!(_veh isKindOf "CAManBase")}) then {
     format [
-        "arac=%1 | motor=%2 | hiz=%3 | getVehicleTIPars=%4",
+        "arac=%1 | motor=%2 | hiz=%3 | getVehicleTIPars=%4 ([aliveFactor, movementFactor, metabolismFactor])",
         typeOf _veh,
         isEngineOn _veh,
         round (speed _veh),

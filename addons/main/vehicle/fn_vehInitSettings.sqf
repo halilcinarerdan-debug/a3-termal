@@ -51,13 +51,12 @@ RTI_veh_parMapArr = [0, 1, 2];
     false
 ] call CBA_settings_fnc_init;
 
-// setVehicleTIPars dizisinde hangi sıranın motor/tekerlek/silah olduğu belgelenmeden
-// doğrulanamadı. Varsayım "0,1,2" = [motor, tekerlek, silah]. RTI_fnc_diagTrace ile
-// gözlenip yanlışsa buradan düzeltilir (ör. "1,0,2").
+// BI wiki (setVehicleTIPars): [motor+gövde, tekerlek/palet, ana silah] -> varsayılan "0,1,2" doğru.
+// Bu ayar yalnızca gözlemde farklı çıkarsa düzeltmek içindir (ör. "1,0,2"); normalde dokunma.
 [
     "RTI_veh_parMap",
     "EDITBOX",
-    ["TI parametre sırası (motor, tekerlek, silah)", "setVehicleTIPars dizisindeki indeksler. Varsayılan 0,1,2. Doğrulama: debug konsolunda [] call RTI_fnc_diagTrace, sonra motoru aç / sür / ateş et."],
+    ["TI parametre sırası (motor, tekerlek, silah)", "setVehicleTIPars dizisindeki indeksler. BI wiki sırası [motor+gövde, tekerlek/palet, ana silah] olduğu için varsayılan 0,1,2 doğrudur; yalnızca gözlem farklı çıkarsa değiştir (debug: [] call RTI_fnc_diagTrace)."],
     _category,
     "0,1,2",
     true,

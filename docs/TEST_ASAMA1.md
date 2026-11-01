@@ -43,6 +43,9 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
   (kontrast 0.5 ↔ 1.2, gürültü 0 ↔ 1, yumuşatma 0 ↔ 1.5). Değiştirmiyorsa varsayım A4 yanlış.
 - Termalden çıkınca (normal görüş) görüntü **tamamen eski haline** dönmeli.
 - "Sensör efektleri aktif" kapalıyken görüntü vanilla olmalı.
+- **Hiç değişiklik olmuyorsa** (sürgüler görüntüye etki etmiyorsa) bunu özellikle bildir: PP efektlerinin termalde
+  çizilmesi (varsayım A4) o zaman çözülmemiş demektir. Efektlere zaten `ppEffectForceInNVG` uygulandı; yetmediyse
+  başka bir yol (ör. optiğin kendi `opticsPPEffects` ayarı) gerekir.
 
 **Gönder:** hangi optikte test ettin, "daha az uzaylı" mı oldu (kontrast/parlaklık hangi değerde iyi göründü), ekran görüntüsü.
 
@@ -54,6 +57,9 @@ Termal optikle birkaç tek atış, sonra otomatik atış.
 
 - Her atışta görüntü kısa süre **parlamalı** ve ~0.15 sn'de normale dönmeli.
 - Palet **siyah sıcak** ise Addon Options → "Termal palet kutbu" = Siyah sıcak yap; flaş koyu yöne gitmeli.
+- **Otomatik kutup (deneysel):** "Termal palet kutbu" = Otomatik yap, optikte paleti değiştir (`N`); flaşın yönü
+  palete uyumlu değişmeli. Uymuyorsa `call RTI_fnc_diag` çıktısındaki `gorus [mod, flirIndeksi]` değerini her palet için
+  not edip bana gönder (hangi indeks hangi palet), eşlemeyi düzeltelim.
 - Susturuculu silahta flaş belirgin şekilde zayıf olmalı.
 
 ## 4. Sıcak parçacık görünürlüğü (kritik test)
@@ -82,7 +88,11 @@ sür (20 sn) → dur → ateş et (varsa silah) → motoru kapat**. Satırlardak
 `RTI_eng/whl/wpn` durumlarını izle.
 
 - Motor açılınca hangi indeks (0/1/2) artıyor? Sürerken? Ateş edince? **Trace satırlarını bana gönder.**
-  Sıra `0,1,2` değilse Addon Options → "TI parametre sırası"nı düzelt (ör. `1,0,2`).
+  `TIPars` satırı `[aliveFactor, movementFactor, metabolismFactor]` sırasıdır. BI wiki, `setVehicleTIPars` sırasını
+  `[motor+gövde, tekerlek/palet, ana silah]` olarak veriyor; beklenen: motor açılınca 1., sürerken 2., ateş edince 3. değer
+  artar. Farklı çıkarsa Addon Options → "TI parametre sırası"nı düzelt.
+- Kritik gözlem: motor kapalıyken **bizim yazdığımız** değerler oyunun kendi değerleriyle çakışıyor mu (değerler ileri
+  geri zıplıyor mu)? Zıplıyorsa oyun üzerine yazıyor demektir (varsayım A3b); bana bildir.
 - Motoru kapatınca değerler yavaşça düşmeli (tank ~25 dk yarı-ömür; hızlı görmek için
   "Soğuma süresi çarpanı" = 0.1).
 - Termalden araca bakarken motor bölgesinin zamanla söndüğü gözle görülmeli.
@@ -111,6 +121,22 @@ Araç üstünde turuncu (motor/egzoz) ve kırmızı (namlu) işaretçiler ve "mo
 - Leke hiç görünmüyorsa §4 testi (`testHeatSpot`) de görünmüyordur: parçacıklar TI'de çizilmiyor demektir; bana söyle.
 
 **Gönder:** ekran görüntüsü (termalde), kullandığın araç sınıfı, `[RTI][SPOT]` RPT satırı.
+
+## 5b2. İnsan vücut ısısı çarpanı testi (karar verici, 1 dakika)
+
+Sorulan: `setVehicleTIPars` bir **askerde** de ısıyı sürüyor mu? (BI wiki yalnızca "piyade silahlarında çalışmaz" diyor.)
+Bir düşman/YZ askerine ya da kendine ~30-50 m mesafeden **termal optikten** bakarken debug konsolunda (Local Exec):
+
+```sqf
+getVehicleTIPars cursorObject;                  // imleç askerdeyken; sonuç satırına bak
+cursorObject setVehicleTIPars [1, 0, 0.3];      // askerin termal parlaklığı değişti mi?
+cursorObject setVehicleTIPars [1, 1, 1];        // geri al / tam sıcak
+cursorObject setVehicleTIPars [0, 0, 0];        // tamamen soğuk
+```
+
+**Gönder:** `getVehicleTIPars` sonucu ve hangi komutun askerin görüntüsünü değiştirdiği (hiçbiri / hepsi / yalnızca 3. değer).
+Değiştiriyorsa vücut ısısı modülü (taban parlaklık çarpanı, koşma/yatma/yaralanma/hava ile dinamik metabolizma) yazılır.
+Değiştirmiyorsa insan tarafında yalnızca doku yolu kalır.
 
 ## 5c. Üniforma modeli sayımı (anatomik ısı için ölçüm)
 

@@ -17,11 +17,11 @@ class CfgPatches
         url = "";
         units[] = {};
         weapons[] = {};
-        requiredVersion = 2.02;
+        requiredVersion = 2.08;
         requiredAddons[] = {"cba_main"};
         version = 0.2;
-        versionStr = "0.2.0";
-        versionAr[] = {0,2,0};
+        versionStr = "0.2.2";
+        versionAr[] = {0,2,2};
     };
 };
 

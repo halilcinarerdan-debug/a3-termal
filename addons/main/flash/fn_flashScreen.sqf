@@ -26,6 +26,10 @@ if (_handle < 0) then {
         _handle = ppEffectCreate ["ColorCorrections", 7300 + _i];
         if (_handle >= 0) exitWith {};
     };
+
+    // Termal / NVG açıkken de çizilsin (bkz. sensorRefresh).
+    if (_handle >= 0) then {_handle ppEffectForceInNVG true};
+
     missionNamespace setVariable ["RTI_pp_flash", _handle];
 };
 
@@ -33,7 +37,8 @@ if (_handle < 0) exitWith {};
 
 private _alpha = ((_intensity * RTI_flash_ownGain) * 0.45) min 0.9;
 // Beyaz sıcak (0): sıcak = parlak -> 1 (beyaz). Siyah sıcak (1): sıcak = koyu -> 0 (siyah).
-private _tone = parseNumber (RTI_sensor_polarity isNotEqualTo 1);
+private _polarity = call RTI_fnc_sensorPolarity;
+private _tone = parseNumber (_polarity isNotEqualTo 1);
 
 _handle ppEffectEnable true;
 _handle ppEffectAdjust [1, 1, 0, [_tone, _tone, _tone, _alpha], [1, 1, 1, 0], [0.299, 0.587, 0.114, 0]];

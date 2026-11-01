@@ -11,4 +11,5 @@ class sensor
     class sensorStart {};
     class sensorStop {};
     class sensorRefresh {};
+    class sensorPolarity {};
 };

@@ -71,14 +71,18 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     _refresh
 ] call CBA_settings_fnc_init;
 
-// Termal paletin kutbu oyundan okunamaz; flaşın hangi yönde (parlak/koyu) çizileceğini
-// senin seçmen gerekir. Optikte N tuşuyla beyaz-sıcak / siyah-sıcak değiştirilir.
+// Flaşın hangi yönde (parlak/koyu) çizileceği paletin kutbuna bağlı. Oyun FLIR indeksini
+// bildiriyor (currentVisionMode [birim], 2.08+); "Otomatik" bunu kullanır. İndeks -> kutup
+// eşlemesi setCamUseTI sayfasından doğrulanmadığı için varsayılan elle seçimdir.
+// Siyah sıcak olan paletlerin FLIR indeksleri (hafızadan; doğrulanmadı):
+RTI_sensor_blackHotIndices = [1, 3, 5];
+
 [
     "RTI_sensor_polarity",
     "LIST",
-    ["Termal palet kutbu", "Kullandığın paletle aynı olmalı. Beyaz sıcak: sıcak = parlak. Siyah sıcak: sıcak = koyu. Namlu flaşı bu yönde çizilir."],
+    ["Termal palet kutbu", "Kullandığın paletle aynı olmalı. Beyaz sıcak: sıcak = parlak. Siyah sıcak: sıcak = koyu. Otomatik: oyunun bildirdiği FLIR indeksinden okur (deneysel; palet değişince flaş yönü de değişmeli). Namlu flaşı bu yönde çizilir."],
     _category,
-    [[0, 1], ["Beyaz sıcak", "Siyah sıcak"], 0],
+    [[0, 1, 2], ["Beyaz sıcak", "Siyah sıcak", "Otomatik (FLIR indeksi, deneysel)"], 0],
     false
 ] call CBA_settings_fnc_init;
 

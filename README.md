@@ -13,7 +13,7 @@ bağımlılık yoktur: termal optikler çalışma anında config'ten taranır, s
 | İstek | Durum | Nasıl / sınır |
 |-------|-------|---------------|
 | "Uzaylı" görüntü kalksın | **Kısmen** | Ekran işleme: kontrast/parlaklık (beyaza patlamayı kırar), sensör gürültüsü, yumuşatma. Ayarlanabilir. **İnsanın anatomik ısısı** (yüz/el sıcak, üniforma serin) ve **motordan uzaklaştıkça mekânsal sönümleme** ise modelin termal dokusuna (TI haritası) bağlıdır; script/config ile yapılamaz → bkz. FIZIBILITE.md |
-| Motor / araç ısısı zamanla değişsin | **Deneysel** | Motor, tekerlek-palet ve namlu için ısınma/soğuma modeli (`setVehicleTIPars`). Komut yoksa kendini kapatır. Dizideki sıranın (motor/tekerlek/silah) doğrulanması gerek |
+| Motor / araç ısısı zamanla değişsin | **Deneysel** | Motor, tekerlek-palet ve namlu için ısınma/soğuma modeli (`setVehicleTIPars`). Komutun varlığı, sırası `[motor+gövde, tekerlek/palet, ana silah]` ve yerel etkisi BI wiki ile **doğrulandı**; oyunun değerlerimizi her karede ezip ezmediği oyunda sınanacak |
 | Motordan / egzozdan / namludan uzaklaştıkça sönen ısı (mekânsal) | **Deneysel (hile)** | Model dokusuna dokunmadan: sınıf config'inden motor (`HitEngine`), egzoz (`Exhausts`) ve namlu (`gunBeg`/`gunEnd`) noktaları **otomatik** bulunur; oraya ısıya göre parlaklığı değişen, kenarı yumuşak bir ısı lekesi (parçacık) bırakılır. Uzaklaştıkça sönmesi sprite'ın radyal gradyanından gelir. RHS/CUP sınıf tablosu gerekmez. Gerçek "boyama" değildir (bkz. FIZIBILITE.md §2b) |
 | Namlu ateşi (muzzle flash) termalde parlasın | **Kendi silahım: güvenilir. Başkaları: deneysel** | Kendi atışım: ekran flaşı (PP), dünya nesnesine bağlı değil. Başkalarının atışı: namlu ucunda kısa ömürlü sıcak parçacık; parçacığın TI'de parlak çizilip çizilmediği **doğrulanmadı** (`call RTI_fnc_testHeatSpot`) |
 | Her türlü ışık kaynağı (lamba, far, fişek) | **Yapılmadı (v0.2)** | Parçacık yönteminin TI'de çalıştığı doğrulanınca aynı altyapıya eklenecek |
@@ -62,8 +62,9 @@ belgelenemeyen komutlar doğrudan yazılmaz (`supportInfo` ile tespit edilip `co
 | Araç sıcak noktaları | aktif, şiddet, aynı anda en fazla araç, **motor lekesi yükseltme** |
 | Genel | ayrıntılı günlük (RPT) |
 
-Termal paletin kutbu (beyaz/siyah sıcak) oyundan okunamıyor; kendi flaşının doğru yönde çizilmesi için ayarı
-kullandığın paletle eşle (optikte `N`).
+Flaşın yönü paletin kutbuna (beyaz/siyah sıcak) bağlı. Ayarı elle kullandığın paletle eşleyebilir ya da
+"Otomatik"i seçebilirsin: oyun FLIR indeksini bildiriyor (`currentVisionMode [birim]`, 2.08+). İndeks → kutup eşlemesi
+henüz teyit edilmedi, bu yüzden varsayılan elle seçimdir.
 
 ## Teşhis (debug konsolu, Local Exec)
 
@@ -95,5 +96,6 @@ call RTI_fnc_exportUniforms;            // üniformaları karakter modeline gör
 | 4 | Araç ısınma/soğuma modeli | 🧪 deneysel (`setVehicleTIPars` doğrulanacak) |
 | 5 | Araç sıcak noktaları (motor/egzoz/namlu lekesi) | 🧪 deneysel (parçacık TI + `selectionPosition` doğrulanacak) |
 | 6 | Işık kaynakları: lamba, far, fişek | ⏳ #3 doğrulanınca |
-| 7 | Kendi proxy modelimiz + kendi TI dokumuz (gerçek radyal gradyan, RHS/CUP dosyası gerekmez) | ⏳ TI doku formatı belgesi gerekir |
-| 8 | Üniforma TI haritaları (anatomik ısı) | ⏳ model verisi gerektirir, bkz. FIZIBILITE.md |
+| 7 | İnsan vücut ısısı çarpanı (taban parlaklık, koşma/yatma/yaralanma ile metabolizma) | ⏳ `setVehicleTIPars` askerde çalışıyor mu testi gerekir (TEST §5b2) |
+| 8 | Kendi proxy modelimiz + kendi TI dokumuz (gerçek radyal gradyan, RHS/CUP dosyası gerekmez) | ⏳ kanal anlamları belli ✅; MLOD p3d + rvmat + PAA üretimi kalan iş |
+| 9 | Üniforma TI haritaları (anatomik bölge dağılımı, alfa kanalı) | ⏳ model verisi gerektirir, bkz. FIZIBILITE.md |
