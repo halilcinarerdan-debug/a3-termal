@@ -22,9 +22,10 @@
 */
 
 // Tüm okumalar varsayılanlı: tanımsız bir ayar değişkeni (ör. eski/yarım yüklenmiş ayarlar) hata verip efekti öldürmesin.
-private _preset = missionNamespace getVariable ["RTI_sensor_preset", 1];
+private _preset = missionNamespace getVariable ["RTI_sensor_preset", 2];
 
 private _base = switch (_preset) do {
+    // 1 ve 4: oyunda ekranı TAMAMEN KARARTTI (ColorCorrections matematiği 0.5 pivot varsayımına uymuyor); kalibrasyon (RTI_fnc_ppLadder) bekliyor.
     case 1: {[1.0, 2.2, -0.30, 0.10, 0.6, 0.10]};
     case 2: {[1.0, 1.35, -0.08, 0.10, 0.4, 0.04]};
     case 3: {[0.95, 0.9, 0, 0.08, 0.25, 0]};

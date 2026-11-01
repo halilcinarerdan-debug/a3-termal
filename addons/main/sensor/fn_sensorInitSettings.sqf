@@ -38,7 +38,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "LIST",
     ["Hazır ayar", "Agresif: sert siyah-beyaz, zemin siyaha yakın, çimen koyu gri, belirgin bulanıklık. Siyah: çimeni ve zayıf ısıları siyaha gömer (sert eşik); insan giysisi de koyulaşır, yalnızca yüz/el gibi sıcak yerler parlak kalır. Dengeli: ılımlı. Yumuşak: vanilla'ya yakın. Elle: aşağıdaki sürgüler kullanılır."],
     _category,
-    [[0, 1, 2, 3, 4], ["Elle (aşağıdaki sürgüler)", "Agresif (sert siyah-beyaz, bulanık)", "Dengeli", "Yumuşak", "Siyah (çimeni sil, sert eşik)"], 1],
+    [[0, 1, 2, 3, 4], ["Elle (aşağıdaki sürgüler)", "Agresif (KALİBRASYON BEKLİYOR: ekranı karartabilir)", "Dengeli", "Yumuşak", "Siyah (KALİBRASYON BEKLİYOR: ekranı karartabilir)"], 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -48,7 +48,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "SLIDER",
     ["[Elle] Parlaklık", "1 = değişiklik yok. Yalnızca Hazır ayar = Elle iken kullanılır."],
     _category,
-    [0.5, 1.5, 1.0, 2],
+    [0.3, 4, 1.0, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -58,7 +58,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "SLIDER",
     ["[Elle] Kontrast", "1 = değişiklik yok. Yüksek kontrast siyah-beyaz ayrımını sertleştirir; siyah seviyesiyle birlikte kullan. Yalnızca Elle iken."],
     _category,
-    [0.5, 3, 1.7, 2],
+    [0.3, 4, 1.2, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -68,7 +68,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "SLIDER",
     ["[Elle] Siyah seviyesi (ofset)", "Negatif değer görüntüyü karartır: orta gri zemin ve çimen yamaları siyaha yaklaşır, parlak hedefler beyazda kalır. Uzaktaki askerin zeminden ayrışması için en etkili sürgü. Yalnızca Elle iken."],
     _category,
-    [-0.6, 0.3, -0.12, 2],
+    [-1, 0.5, 0, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;
@@ -88,7 +88,7 @@ private _refresh = {call RTI_fnc_sensorRefresh};
     "SLIDER",
     ["[Elle] Bulanıklık (MTF)", "Optik/sensör çözünürlük kaybı: keskin kenarları ve ince çimen desenini yumuşatır. 0 = yok. Çok yükseltirsen uzaktaki hedefler de silinir. Yalnızca Elle iken."],
     _category,
-    [0, 3, 0.6, 2],
+    [0, 5, 0.4, 2],
     false,
     _refresh
 ] call CBA_settings_fnc_init;

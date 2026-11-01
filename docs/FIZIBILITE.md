@@ -146,7 +146,7 @@ istiyorsan v0.3 ayrı bir "veri modu" (`rti_data`) olarak planlanmalı.
 | A2 | Dizi sırası `[motor+gövde, tekerlek/palet, ana silah]` | ✅ wiki sayfası bu sırayı veriyor (varsayılan `0,1,2` doğru) | — |
 | A3a | Komut **yerel** etkilidir | ✅ wiki: "Local Effect" — tasarım zaten her istemcide ayrı uyguluyor | — |
 | A3b | Oyun, motor kapalıyken bile verdiğimiz değerleri her karede üzerine yazmaz | Wiki örneği ("motoru ısıt, kış için ideal") kalıcı geçersiz kılma olduğunu düşündürüyor; yine de `diagTrace` ile 1 sn'lik tikler arasında değerlerin bizim hesapladığımızla uyuşmasına bak | Gözlem gereken ayrıntı; bildir |
-| A4 | Post-process, TI çiziminin üstüne uygulanır **ve** termal/NVG açıkken çizilir | Termalde ayar sürgüleri görüntüyü değiştirmeli. Wiki'nin "See also" listesindeki `ppEffectForceInNVG` bu yüzden tüm PP efektlerine uygulandı (v0.2.2); gerekli olup olmadığı oyunda sınanmalı | Sensör modülü işe yaramaz |
+| A4 | Post-process, TI çiziminin üstüne uygulanır **ve** termal/NVG açıkken çizilir ✅ (Zeus kamerasında RTI efektleri ekranı değiştirdi) | Termalde ayar sürgüleri görüntüyü değiştirmeli. Wiki'nin "See also" listesindeki `ppEffectForceInNVG` bu yüzden tüm PP efektlerine uygulandı (v0.2.2); gerekli olup olmadığı oyunda sınanmalı | Sensör modülü işe yaramaz |
 | A5 | `#particlesource` parçacıkları TI'de sıcak çizilir | `call RTI_fnc_testHeatSpot` (termalden bak) | "Başkalarının flaşı" kapatılır, farklı yöntem (nesne) denenir |
 | A6 | `Fired` olayı yalnızca atıcının yerel olduğu makinede çalışır | Dedicated sunucu + 2 istemci testi (TEST_ASAMA1 §7) | Olay yolu değişir |
 | A7 | PiP mercekli optikte `currentVisionMode` 2 döner ama ana ekran normaldir | PiP'li RHS/CUP optikle dene | "Efekt uygulanmayacak optikler" listesi doldurulur |

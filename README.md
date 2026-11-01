@@ -104,6 +104,7 @@ call RTI_fnc_testHeatSpot;              // termalde parçacık "sıcak nokta" g�
 [true] call RTI_fnc_spotDebug;          // normal görüşte: motor/egzoz/namlu noktalarını araç üstünde işaretle ([false] kapatır)
 call RTI_fnc_exportUniforms;            // üniformaları karakter modeline göre gruplar (anatomik ısı artık öncelikli değil)
 call RTI_fnc_exportClutter;             // çimen clutter sınıfları + yakın arazi nesneleri (çimen yamalarının kaynağı)
+["offset"] call RTI_fnc_ppLadder;      // KALİBRASYON: bir PP parametresini adım adım değiştirir (offset / contrast / gain / blur / grain); ekran kararıyorsa ölçüm için
 call RTI_fnc_ppTest;                    // efektler hiç değişmiyorsa: ekranı 7 sn kırmızı/mavi boyar; post-process termalde çiziliyor mu?
 call RTI_fnc_diagOwner;                 // eldeki silah / baktığın birim hangi modda tanımlı? (termal özellik kimden: vanilla, RHS, CUP, ACE?)
 [true] call RTI_fnc_sensorForce;        // görüş moduna bakmadan RTI efektlerini aç (Zeus kamerası / A-B testi); [false] kapatır

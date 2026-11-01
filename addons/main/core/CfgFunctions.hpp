@@ -23,4 +23,7 @@ class core
 
     // Post-process termalde cizilir mi? Ekrani 7 sn boyar (kirmizi / mavi): call RTI_fnc_ppTest;
     class ppTest {};
+
+    // Kalibrasyon merdiveni: bir PP parametresini adim adim degistirip sohbete yazar: ["offset"] call RTI_fnc_ppLadder;
+    class ppLadder {};
 };

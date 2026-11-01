@@ -51,6 +51,27 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a. KALİBRASYON: ekran tamamen kararıyorsa (0.4.2)
+
+Gözlem: Agresif (kontrast 2.2, ofset -0.30) Zeus'ta ekranı **tamamen karartıyor**. Bu iki şeyi söyler: (1) post-process termal görüntünün
+üstüne **çiziliyor** (varsayım A4 doğrulandı), (2) ColorCorrections kontrast / ofset matematiği benim varsaydığım gibi **değil**.
+Bu yüzden hesap yerine ölçüyoruz. **Önce** Hazır ayar = **Dengeli** (varsayılan) ya da Yumuşak yap; ekran kararıyorsa Shift+Ctrl+T ile efekti kapat.
+
+Termal görüntüye (Zeus + Shift+Ctrl+T açık değilken, vanilla termal) çimen ve bir tank/asker görünecek şekilde bak, debug konsolunda sırayla:
+
+```sqf
+["offset"] call RTI_fnc_ppLadder;     // siyah seviyesi 0 -> -0.8  (8 adım x 5 sn)
+["contrast"] call RTI_fnc_ppLadder;   // kontrast 1 -> 4
+["gain"] call RTI_fnc_ppLadder;       // parlaklık çarpanı 1 -> 4
+["blur"] call RTI_fnc_ppLadder;       // bulanıklık 0 -> 3
+["grain"] call RTI_fnc_ppLadder;      // gürültü 0 -> 0.8
+```
+
+Her adımda sohbete `KALIBRASYON <mod>: adim n/N -> deger x` yazılır. **Her mod için bana şunu yaz:**
+(a) çimenin kaybolmaya başladığı adım/değer, (b) tankın/askerin bozulmaya (griye/siyaha) başladığı adım/değer, (c) ekranın tamamen karardığı adım/değer.
+Bu üç sayıdan hazır ayar değerlerini ölçüye göre yeniden yazarım. Mod seçeneğini değiştirmeden herhangi bir mod tek başına yeterli ilk veridir:
+en bilgilendirici olan **offset** ve **contrast**.
+
 ## 2b2. Efektler hiç değişmiyorsa (sırayla kontrol et)
 
 1. **Hangi sürüm yüklü?** `call RTI_fnc_diag;` ilk satır `surum (yuklu PBO, CfgPatches)=...` söyler. Komut yoksa / hata veriyorsa
