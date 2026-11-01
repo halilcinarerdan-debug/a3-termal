@@ -51,6 +51,15 @@ Oyuncuya termal bir optik ver (RHS veya CUP termal nişangah / vanilla TWS) ve n
 
 PiP (render-target) mercekli bir optikse: normal ana ekran bozuluyorsa optik sınıfını "Efekt uygulanmayacak optikler"e yaz.
 
+## 2a0000000. HDR POZU (aperture) ölçümü (0.5.0)
+
+A3TI'nin dosya adlarından (`setAperture`, `adjustAperture`) termal parlaklığın post-process'in ALTINDA, oyunun HDR pozuyla (kamera açıklığı) sürülüyor
+olabileceği çıkarıldı. Bu, kontrast/ofsetin beklendiği gibi davranmamasını ve uzak bölgelerin bembeyaz kalmasını (aşırı pozlama) açıklayabilir.
+
+1. `call RTI_fnc_diag;` çıktısındaki **"ilgili komutlar"** satırını gönder (içinde `setAperture` / `setApertureNew` / `apertureParams` imzaları görünür).
+2. Termal görüntüye bakarken (uzak ağaç ve zemin görünürken): `call RTI_fnc_apertureLadder;` 10 adım x 5 sn, sonunda otomatiğe döner.
+   Bana yaz: hangi değerlerde ekran **daha parlak / daha karanlık**, hangi adımda **uzak beyaz bölge griye inip detaylanıyor**, hangi adımda çok karanlık.
+
 ## 2a000000. CANLI AYAR (0.4.9): görünümü tuşlarla bul, değerleri bana yapıştır
 
 Menüden sürgü değiştirmek yavaş. Termale (veya Shift+Ctrl+T ile zorlanmış) bakarken, **hepsi Ctrl + Alt ile**:

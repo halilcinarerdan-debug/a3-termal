@@ -27,6 +27,7 @@ private _has = {
 
 RTI_cap_setVehicleTIPars = ["setvehicletipars"] call _has;
 RTI_cap_getVehicleTIPars = ["getvehicletipars"] call _has;
+RTI_cap_setAperture = ["setaperture"] call _has;
 
 RTI_setTIPars = if (RTI_cap_setVehicleTIPars) then {
     compile "params ['_v', '_a']; _v setVehicleTIPars _a;"
@@ -40,11 +41,19 @@ RTI_getTIPars = if (RTI_cap_getVehicleTIPars) then {
     {[]}
 };
 
+// HDR pozu: komut yoksa mod cokmesin diye compile ile sarilir (-1 = otomatige don).
+RTI_setAperture = if (RTI_cap_setAperture) then {
+    compile "params ['_v']; setAperture _v;"
+} else {
+    {}
+};
+
 RTI_cap_ready = true;
 
 diag_log format [
-    "[RTI] yetenekler | setVehicleTIPars=%1 getVehicleTIPars=%2 | CBA=%3",
+    "[RTI] yetenekler | setVehicleTIPars=%1 getVehicleTIPars=%2 setAperture=%4 | CBA=%3",
     RTI_cap_setVehicleTIPars,
     RTI_cap_getVehicleTIPars,
-    isClass (configFile >> "CfgPatches" >> "cba_main")
+    isClass (configFile >> "CfgPatches" >> "cba_main"),
+    RTI_cap_setAperture
 ];

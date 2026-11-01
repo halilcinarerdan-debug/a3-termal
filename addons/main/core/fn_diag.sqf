@@ -49,7 +49,7 @@ format [
 // Oyunun gerçekten bildirdiği termal/görüş ile ilgili komutlar (imzalarıyla)
 private _si = (supportInfo "") select {
     private _l = toLower _x;
-    ((_l find "tipar") >= 0) || {(_l find "thermal") >= 0} || {(_l find "visionmode") >= 0}
+    ((_l find "tipar") >= 0) || {(_l find "thermal") >= 0} || {(_l find "visionmode") >= 0} || {(_l find "aperture") >= 0}
 };
 format ["ilgili komutlar (%1): %2", count _si, _si joinString " ; "] call _log;
 

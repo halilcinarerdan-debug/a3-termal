@@ -29,4 +29,7 @@ class core
 
     // Notr ayarda bile ekran kararirsa: her PP efektini tek basina ve ForceInNVG acik/kapali dener: call RTI_fnc_ppBisect;
     class ppBisect {};
+
+    // HDR pozu (setAperture) merdiveni: termaldeki asil parlaklik bu katmandan gelebilir: call RTI_fnc_apertureLadder;
+    class apertureLadder {};
 };
